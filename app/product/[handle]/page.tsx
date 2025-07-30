@@ -1,8 +1,9 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
+import { ExtendedProductProvider } from 'components/product/extended-product-context';
 import { PremiumProductInfo } from 'components/product/premium-product-info';
-import { ProductProvider } from 'components/product/product-context';
+import { BrutalistVariantGallery } from 'components/product/variant-aware-gallery';
 import { HIDDEN_PRODUCT_TAG } from 'lib/constants';
 import { getProduct, getProductRecommendations } from 'lib/shopify';
 import { Suspense } from 'react';
@@ -71,7 +72,7 @@ export default async function ProductPage(props: { params: Promise<{ handle: str
   };
 
   return (
-    <ProductProvider>
+    <ExtendedProductProvider product={product}>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -91,22 +92,7 @@ export default async function ProductPage(props: { params: Promise<{ handle: str
                 <div className="w-full h-screen bg-black" />
               }
             >
-              <div className="w-full h-screen relative overflow-hidden">
-                <div 
-                  className="w-full h-full bg-cover bg-center"
-                  style={{
-                    backgroundImage: `url(${product.images[0]?.url || ''})`,
-                    clipPath: 'polygon(0 0, 85% 0, 100% 100%, 0% 100%)'
-                  }}
-                />
-                
-                {/* Price Watermark */}
-                <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                  <div className="text-[15vw] font-black text-black opacity-5 select-none">
-                    CHF {product.priceRange.minVariantPrice.amount}
-                  </div>
-                </div>
-              </div>
+              <BrutalistVariantGallery />
             </Suspense>
           </div>
 
@@ -135,11 +121,6 @@ export default async function ProductPage(props: { params: Promise<{ handle: str
               <div className="mb-12">
                 <PremiumProductInfo product={product} />
               </div>
-              
-              {/* Add to Cart Button */}
-              <button className="w-full bg-black text-white py-6 font-mono text-sm uppercase tracking-wider hover:bg-gray-900 transition-colors">
-                IN DEN WARENKORB
-              </button>
             </Suspense>
           </div>
           
@@ -149,6 +130,6 @@ export default async function ProductPage(props: { params: Promise<{ handle: str
           </div>
         </div>
       </div>
-    </ProductProvider>
+    </ExtendedProductProvider>
   );
 }

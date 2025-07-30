@@ -1,9 +1,9 @@
 'use client';
 
-import { AddToCart } from 'components/cart/add-to-cart';
-import { Product } from 'lib/shopify/types';
 import { useState } from 'react';
-import { VariantAwareSelector } from './variant-aware-selector';
+import { Product } from '../../lib/shopify/types';
+import { AddToCart } from '../cart/add-to-cart';
+import { VariantSelector } from './variant-selector';
 
 interface PremiumProductInfoProps {
   product: Product;
@@ -17,8 +17,8 @@ export function PremiumProductInfo({ product }: PremiumProductInfoProps) {
 
   return (
     <div className="space-y-6">
-      {/* Variant Selector with Image Integration */}
-      <VariantAwareSelector options={product.options} variants={product.variants} />
+      {/* Variant Selector */}
+      <VariantSelector options={product.options} variants={product.variants} />
 
       {/* Quantity Selector */}
       <div className="space-y-2">

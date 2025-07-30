@@ -434,3 +434,153 @@ select {
   border-radius: 0 !important;
   box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.1) !important;
 }
+
+/* Custom Animations */
+@keyframes gradient-shift {
+  0% { opacity: 0.1; }
+  50% { opacity: 0.3; }
+  100% { opacity: 0.1; }
+}
+
+.animate-gradient-shift {
+  animation: gradient-shift 4s ease-in-out infinite;
+}
+
+/* Accessibility Improvements */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Focus indicators */
+:focus {
+  outline: 2px solid #00BFA6;
+  outline-offset: 2px;
+}
+
+/* Skip to content link */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 6px;
+  background: #00BFA6;
+  color: white;
+  padding: 8px;
+  z-index: 100;
+  text-decoration: none;
+}
+
+.skip-link:focus {
+  top: 6px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  * {
+    border-color: #000 !important;
+  }
+  
+  .text-\[\#003B46\]\/60 {
+    color: #000 !important;
+  }
+  
+  .text-\[\#003B46\]\/80 {
+    color: #000 !important;
+  }
+}
+
+/* Enhanced shadow utilities for brutalist design */
+.shadow-medium {
+  box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.1);
+}
+
+.shadow-large {
+  box-shadow: 12px 12px 0 rgba(0, 0, 0, 0.15);
+}
+
+/* Writing mode utility for vertical text */
+.writing-vertical-rl {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+}
+
+/* Mobile-first responsive optimizations */
+@media (max-width: 640px) {
+  /* Ensure text scales properly on small screens */
+  .text-8xl {
+    font-size: 4rem !important;
+    line-height: 1 !important;
+  }
+  
+  .text-7xl {
+    font-size: 3.5rem !important;
+    line-height: 1 !important;
+  }
+  
+  /* Optimize padding for mobile */
+  .px-6 {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+  
+  /* Improve touch targets */
+  button {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+/* Horizontal scroll snap behavior */
+.snap-x {
+  scroll-snap-type: x mandatory;
+}
+
+.snap-start {
+  scroll-snap-align: start;
+}
+
+.scroll-pl-4 {
+  scroll-padding-left: 1rem;
+}
+
+/* Hide scrollbars while maintaining functionality */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Line clamp utility for text truncation */
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Performance optimizations */
+.will-change-transform {
+  will-change: transform;
+}
+
+.contain-layout {
+  contain: layout;
+}
+
+/* Print styles */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  
+  * {
+    color: #000 !important;
+    background: transparent !important;
+  }
+}

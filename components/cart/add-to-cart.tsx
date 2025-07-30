@@ -7,6 +7,18 @@ import { Product, ProductVariant } from 'lib/shopify/types';
 import { useActionState } from 'react';
 import { useCart } from './cart-context';
 
+// Try to use the extended context, fallback to basic context
+function useProductContext() {
+  try {
+    // Try to import and use extended context
+    const { useExtendedProduct } = require('components/product/extended-product-context');
+    return useExtendedProduct();
+  } catch {
+    // Fallback to basic context
+    return { ...useProduct(), selectedVariant: null };
+  }
+}
+
 function SubmitButton({
   availableForSale,
   selectedVariantId,
@@ -56,16 +68,21 @@ function SubmitButton({
 export function AddToCart({ product }: { product: Product }) {
   const { variants, availableForSale } = product;
   const { addCartItem } = useCart();
-  const { state } = useProduct();
+  const context = useProductContext();
+  const { state } = context;
   const [message, formAction, isPending] = useActionState(addItem, null);
 
-  const variant = variants.find((variant: ProductVariant) =>
-    variant.selectedOptions.every(
-      (option) => option.value === state[option.name.toLowerCase()]
-    )
-  );
+  // Use selectedVariant from extended context if available, otherwise find by state
+  const selectedVariant = 'selectedVariant' in context && context.selectedVariant
+    ? context.selectedVariant
+    : variants.find((variant: ProductVariant) =>
+        variant.selectedOptions.every(
+          (option) => option.value === state[option.name.toLowerCase()]
+        )
+      );
+
   const defaultVariantId = variants.length === 1 ? variants[0]?.id : undefined;
-  const selectedVariantId = variant?.id || defaultVariantId;
+  const selectedVariantId = selectedVariant?.id || defaultVariantId;
   const addItemAction = formAction.bind(null, selectedVariantId);
   const finalVariant = variants.find(
     (variant) => variant.id === selectedVariantId
@@ -74,12 +91,14 @@ export function AddToCart({ product }: { product: Product }) {
   return (
     <form
       action={async () => {
-        addCartItem(finalVariant, product);
-        addItemAction();
+        if (finalVariant) {
+          addCartItem(finalVariant, product);
+          addItemAction();
+        }
       }}
     >
       <SubmitButton
-        availableForSale={availableForSale}
+        availableForSale={selectedVariant?.availableForSale ?? availableForSale}
         selectedVariantId={selectedVariantId}
         isPending={isPending}
       />
