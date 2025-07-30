@@ -6,7 +6,11 @@
     "start": "next start",
     "prettier": "prettier --write --ignore-unknown .",
     "prettier:check": "prettier --check --ignore-unknown .",
-    "test": "pnpm prettier:check"
+    "test": "pnpm prettier:check",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "test:lighthouse": "lhci autorun",
+    "test:all": "pnpm prettier:check && pnpm test:e2e && pnpm test:lighthouse"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.0",
@@ -19,6 +23,8 @@
     "sonner": "^2.0.1"
   },
   "devDependencies": {
+    "@lhci/cli": "^0.15.1",
+    "@playwright/test": "^1.54.1",
     "@tailwindcss/container-queries": "^0.1.1",
     "@tailwindcss/postcss": "^4.0.14",
     "@tailwindcss/typography": "^0.5.16",

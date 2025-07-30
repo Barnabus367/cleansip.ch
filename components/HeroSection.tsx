@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Straw from './Straw';
 
 interface HeroSectionProps {
   featuredPrice?: string;
@@ -6,7 +7,11 @@ interface HeroSectionProps {
 
 export default function HeroSection({ featuredPrice = 'CHF 14.90' }: HeroSectionProps) {
   return (
-    <section className="relative min-h-screen bg-white overflow-hidden" aria-labelledby="hero-heading">
+    <section 
+      className="relative min-h-screen bg-white overflow-hidden" 
+      aria-labelledby="hero-heading"
+      data-testid="hero-section"
+    >
       {/* Two-Column Grid Layout */}
       <div className="grid lg:grid-cols-2 min-h-screen max-w-[1600px] mx-auto">
       
@@ -47,7 +52,10 @@ export default function HeroSection({ featuredPrice = 'CHF 14.90' }: HeroSection
           
           {/* Info-Grid - Gemäß Spezifikation als Grid mit vier Spalten */}
           <div className="mt-10">
-            <dl className="grid grid-cols-4 gap-x-8 text-xs uppercase tracking-widest">
+            <dl 
+              className="grid grid-cols-4 gap-x-8 text-xs uppercase tracking-widest"
+              data-testid="info-grid"
+            >
               <div>
                 <dt className="text-secondary-500/60 font-light">Menge</dt>
                 <dd className="text-secondary-800 font-medium">100 Stück</dd>
@@ -90,24 +98,31 @@ export default function HeroSection({ featuredPrice = 'CHF 14.90' }: HeroSection
           {/* Background Color Block mit Gradient Animation */}
           <div className="absolute inset-0 bg-gradient-to-br from-primary-500/5 to-accent-500/5 animate-gradient"></div>
           
-          {/* Plastikstrohhalme - Gemäß Spezifikation: 8-12 schlanke, mintfarbene Rechtecke */}
+          {/* Plastikstrohhalme - Optimiert mit Straw-Komponente */}
           <div className="absolute inset-0 flex items-center justify-center">
             <div className="relative w-full h-full max-w-md">
               
-              <div className="flex gap-3 justify-center items-end h-full pt-20 pb-20 animate-float">
-                {[...Array(12)].map((_, i) => (
-                  <div
+              <div 
+                className="flex gap-3 justify-center items-end h-full pt-20 pb-20 animate-float"
+                data-testid="straws-container"
+              >
+                {[
+                  { delay: 0, rotation: 'right' as const, height: 'medium' as const },
+                  { delay: 0.1, rotation: 'left' as const, height: 'tall' as const },
+                  { delay: 0.2, rotation: 'right' as const, height: 'short' as const },
+                  { delay: 0.3, rotation: 'left' as const, height: 'extra-tall' as const },
+                  { delay: 0.4, rotation: 'right' as const, height: 'medium' as const },
+                  { delay: 0.5, rotation: 'left' as const, height: 'tall' as const },
+                  { delay: 0.6, rotation: 'right' as const, height: 'short' as const },
+                  { delay: 0.7, rotation: 'left' as const, height: 'medium' as const },
+                  { delay: 0.8, rotation: 'right' as const, height: 'tall' as const },
+                  { delay: 0.9, rotation: 'left' as const, height: 'extra-tall' as const }
+                ].map((strawConfig, i) => (
+                  <Straw 
                     key={i}
-                    className={`
-                      relative w-1.5 h-56 bg-primary-200/70 rounded-full shadow-soft
-                      before:absolute before:inset-0 before:rounded-full
-                      before:bg-gradient-to-b before:from-white/60 before:to-transparent
-                      transform origin-bottom transition-all duration-700 hover:scale-105
-                      ${i % 2 ? 'rotate-3' : '-rotate-2'}
-                    `}
-                    style={{
-                      animationDelay: `${i * 0.1}s`
-                    }}
+                    delay={strawConfig.delay}
+                    rotation={strawConfig.rotation}
+                    height={strawConfig.height}
                   />
                 ))}
               </div>
@@ -132,15 +147,28 @@ export default function HeroSection({ featuredPrice = 'CHF 14.90' }: HeroSection
             </div>
           </div>
           
-          {/* SVG-Raster aus feinen Linien (hellgrau/grünlich) mit optionaler Animation */}
-          <div className="absolute inset-0 opacity-20">
+          {/* SVG-Raster mit CSS-Variablen für Theme-Support */}
+          <div 
+            className="absolute inset-0"
+            style={{ opacity: 'var(--svg-grid-opacity)' }}
+          >
             <svg className="w-full h-full" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
               <defs>
                 <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-                  <path d="M 40 0 L 0 0 0 40" fill="none" stroke="currentColor" strokeWidth="0.5" className="text-primary-300/40"/>
+                  <path 
+                    d="M 40 0 L 0 0 0 40" 
+                    fill="none" 
+                    stroke="var(--svg-grid-primary)" 
+                    strokeWidth="var(--svg-grid-stroke-width)"
+                  />
                 </pattern>
               </defs>
-              <rect width="100%" height="100%" fill="url(#grid)" className="animate-pulse"/>
+              <rect 
+                width="100%" 
+                height="100%" 
+                fill="url(#grid)" 
+                className="animate-pulse-slow"
+              />
             </svg>
           </div>
           
