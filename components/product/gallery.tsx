@@ -21,14 +21,21 @@ export function Gallery({ images }: { images: { src: string; altText: string }[]
       <div className="relative aspect-square h-full max-h-[550px] w-full overflow-hidden">
         {images[imageIndex] && (
           <Image
+            id="product-image-display"
             className="h-full w-full object-contain"
             fill
             sizes="(min-width: 1024px) 66vw, 100vw"
             alt={images[imageIndex]?.altText as string}
             src={images[imageIndex]?.src as string}
             priority={true}
+            aria-describedby="image-navigation-help"
           />
         )}
+        
+        {/* Hidden description for screen readers */}
+        <div id="image-navigation-help" className="sr-only">
+          Bild {imageIndex + 1} von {images.length}. Verwenden Sie die Pfeil-Buttons oder die Miniaturansichten unten zur Navigation.
+        </div>
 
         {images.length > 1 ? (
           <div className="absolute bottom-[15%] flex w-full justify-center">
@@ -38,10 +45,11 @@ export function Gallery({ images }: { images: { src: string; altText: string }[]
                   const newState = updateImage(previousImageIndex.toString());
                   updateURL(newState);
                 }}
-                aria-label="Previous product image"
+                aria-label={`Vorheriges Produktbild anzeigen (${previousImageIndex + 1} von ${images.length})`}
+                aria-controls="product-image-display"
                 className={buttonClassName}
               >
-                <ArrowLeftIcon className="h-5" />
+                <ArrowLeftIcon className="h-5" aria-hidden="true" />
               </button>
               <div className="mx-1 h-6 w-px bg-neutral-500"></div>
               <button
@@ -49,10 +57,11 @@ export function Gallery({ images }: { images: { src: string; altText: string }[]
                   const newState = updateImage(nextImageIndex.toString());
                   updateURL(newState);
                 }}
-                aria-label="Next product image"
+                aria-label={`Nächstes Produktbild anzeigen (${nextImageIndex + 1} von ${images.length})`}
+                aria-controls="product-image-display"
                 className={buttonClassName}
               >
-                <ArrowRightIcon className="h-5" />
+                <ArrowRightIcon className="h-5" aria-hidden="true" />
               </button>
             </div>
           </div>
@@ -71,8 +80,10 @@ export function Gallery({ images }: { images: { src: string; altText: string }[]
                     const newState = updateImage(index.toString());
                     updateURL(newState);
                   }}
-                  aria-label="Select product image"
-                  className="h-full w-full"
+                  aria-label={`Produktbild ${index + 1} von ${images.length} auswählen${isActive ? ' (aktuell ausgewählt)' : ''}`}
+                  aria-controls="product-image-display"
+                  aria-current={isActive ? 'true' : 'false'}
+                  className="h-full w-full focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-md"
                 >
                   <GridTileImage
                     alt={image.altText}

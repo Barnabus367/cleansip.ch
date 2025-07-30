@@ -159,23 +159,71 @@ button {
     0 10px 10px -5px rgba(0, 0, 0, 0.04);
 }
 
-/* Animation utilities */
-@keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
+/* Animation utilities with reduced motion support */
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+  }
+
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  @keyframes pulse-glow {
+    0%, 100% { box-shadow: 0 0 5px rgba(0, 191, 166, 0.3); }
+    50% { box-shadow: 0 0 20px rgba(0, 191, 166, 0.6); }
+  }
+
+  .animate-pulse-glow {
+    animation: pulse-glow 3s ease-in-out infinite;
+  }
+
+  @keyframes gradient-shift {
+    0%, 100% { opacity: 0.1; }
+    50% { opacity: 0.3; }
+    100% { opacity: 0.1; }
+  }
+
+  .animate-gradient-shift {
+    animation: gradient-shift 4s ease-in-out infinite;
+  }
+
+  /* Enhanced gradient animation for backgrounds */
+  @keyframes gradient-bg {
+    0%, 100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+  }
+
+  .animate-gradient {
+    background-size: 400% 400%;
+    animation: gradient-bg 8s ease infinite;
+  }
 }
 
-.animate-float {
-  animation: float 6s ease-in-out infinite;
-}
-
-@keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 5px rgba(0, 191, 166, 0.3); }
-  50% { box-shadow: 0 0 20px rgba(0, 191, 166, 0.6); }
-}
-
-.animate-pulse-glow {
-  animation: pulse-glow 3s ease-in-out infinite;
+/* Fallback styles for reduced motion - FALLBACK-FREI */
+@media (prefers-reduced-motion: reduce) {
+  .animate-float,
+  .animate-pulse-glow,
+  .animate-gradient-shift,
+  .animate-gradient {
+    animation: none !important;
+    transform: none !important;
+  }
+  
+  .transform-hover-rotate:hover {
+    transform: none;
+  }
+  
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
 /* Grid auto-fit utilities */
@@ -330,20 +378,122 @@ button {
   transform: perspective(1000px) rotateX(5deg) rotateY(5deg) scale3d(1.02, 1.02, 1.02);
 }
 
-/* Stroke text styles for Hero Section */
-.stroke-text {
-  -webkit-text-stroke: 3px #003B46;
-  text-stroke: 3px #003B46;
-}
+/* Utility Layer - Only loaded when used */
+@layer utilities {
+  /* Typography utilities */
+  .stroke-text {
+    -webkit-text-stroke: 3px #003B46;
+    text-stroke: 3px #003B46;
+  }
 
-.stroke-text-thin {
-  -webkit-text-stroke: 1px #003B46;
-  text-stroke: 1px #003B46;
-}
+  .stroke-text-thin {
+    -webkit-text-stroke: 1px #003B46;
+    text-stroke: 1px #003B46;
+  }
 
-.writing-vertical-rl {
-  writing-mode: vertical-rl;
-  text-orientation: mixed;
+  .writing-vertical-rl {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+  }
+
+  /* Special effects - only loaded when used */
+  .shadow-brutal {
+    box-shadow: 8px 8px 0 black;
+  }
+
+  .shadow-brutal-hover {
+    box-shadow: 12px 12px 0 #00BFA6;
+  }
+
+  .transform-hover-rotate {
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .transform-hover-rotate:hover {
+    transform: rotate(-2deg) scale(1.02);
+  }
+
+  /* Grid utilities */
+  .grid-auto-fit-cards {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  }
+
+  /* Snap scroll utilities */
+  .snap-x-mandatory {
+    scroll-snap-type: x mandatory;
+  }
+
+  .snap-start {
+    scroll-snap-align: start;
+  }
+  
+  /* Mobile menu animations */
+  @keyframes fade-in-up {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .animate-fade-in-up {
+    animation: fade-in-up 0.5s ease-out forwards;
+    opacity: 0;
+  }
+  
+  /* Plastikstrohhalm-Stile */
+  .straw-flex {
+    background: repeating-linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.5) 0 2px,
+      transparent 2px 4px
+    );
+  }
+  
+  .straw-base {
+    position: relative;
+  }
+  
+  .straw-base::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 9999px;
+    background: linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.6) 0%,
+      rgba(255, 255, 255, 0.3) 30%,
+      transparent 70%
+    );
+    opacity: 0.8;
+  }
+  
+  /* Transparente Kunststoff-Anmutung */
+  .plastic-texture {
+    background: repeating-linear-gradient(
+      45deg,
+      rgba(255, 255, 255, 0.1) 0px,
+      rgba(255, 255, 255, 0.1) 1px,
+      transparent 1px,
+      transparent 3px
+    );
+  }
+  
+  /* Motion accessibility */
+  @media (prefers-reduced-motion: reduce) {
+    .animate-fade-in-up {
+      animation: none;
+      opacity: 1;
+      transform: none;
+    }
+    
+    .transform-hover-rotate:hover {
+      transform: none;
+    }
+  }
 }
 
 .writing-mode-vertical {
@@ -582,5 +732,60 @@ select {
   * {
     color: #000 !important;
     background: transparent !important;
+  }
+}
+
+/* Animation CSS for Hero Section */
+@layer utilities {
+  /* Keyframe Animations */
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+  
+  @keyframes gradientShift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+  
+  @keyframes pulse-slow {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.8; }
+  }
+
+  /* Animation Classes with prefers-reduced-motion Support */
+  @media (prefers-reduced-motion: no-preference) {
+    .animate-float {
+      animation: float 3s ease-in-out infinite;
+    }
+    
+    .animate-gradient {
+      background-size: 200% 200%;
+      animation: gradientShift 8s ease infinite;
+    }
+    
+    .animate-pulse-slow {
+      animation: pulse-slow 4s ease-in-out infinite;
+    }
+  }
+  
+  /* Reduced motion fallbacks */
+  @media (prefers-reduced-motion: reduce) {
+    .animate-float,
+    .animate-gradient,
+    .animate-pulse-slow {
+      animation: none;
+    }
+  }
+  
+  /* CSS Pseudo-element for white gradient overlay */
+  .before\:bg-gradient-to-b::before {
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.6), transparent);
+  }
+  
+  /* Writing mode for vertical text */
+  .writing-mode-vertical {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
   }
 }

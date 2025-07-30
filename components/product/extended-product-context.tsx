@@ -3,7 +3,7 @@
 import type { Image, Product, ProductVariant } from 'lib/shopify/types';
 import { getImageForVariant, getImageIndexForVariant } from 'lib/variant-image-resolver';
 import { useRouter, useSearchParams } from 'next/navigation';
-import React, { createContext, useContext, useEffect, useMemo, useOptimistic, useState } from 'react';
+import React, { createContext, startTransition, useContext, useEffect, useMemo, useOptimistic, useState } from 'react';
 
 type ProductState = {
   [key: string]: string;
@@ -73,13 +73,17 @@ export function ExtendedProductProvider({
       newState[option.name.toLowerCase()] = option.value;
     });
     
-    setOptimisticState(newState);
+    startTransition(() => {
+      setOptimisticState(newState);
+    });
   };
 
   // Update option and find matching variant
   const updateOption = (name: string, value: string) => {
     const newState = { [name]: value };
-    setOptimisticState(newState);
+    startTransition(() => {
+      setOptimisticState(newState);
+    });
     
     // Find matching variant with new options
     const currentOptions = { ...state, ...newState };
@@ -97,7 +101,9 @@ export function ExtendedProductProvider({
       setCurrentImage(product.images[imageIndex] || null);
       setCurrentImageIndex(imageIndex);
       const newState = { image: index };
-      setOptimisticState(newState);
+      startTransition(() => {
+        setOptimisticState(newState);
+      });
       return { ...state, ...newState };
     }
     return state;
@@ -114,7 +120,9 @@ export function ExtendedProductProvider({
       
       // Update URL state
       const newImageState = { image: imageIndex.toString() };
-      setOptimisticState(newImageState);
+      startTransition(() => {
+        setOptimisticState(newImageState);
+      });
     } else {
       // Fallback to featured image or first image
       const fallbackImage = product.featuredImage || product.images[0] || null;
