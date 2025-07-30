@@ -3,106 +3,188 @@ import { getCollectionProducts } from 'lib/shopify';
 import type { Product } from 'lib/shopify/types';
 import Link from 'next/link';
 
-function ThreeItemGridItem({
+function BentoGridItem({
   item,
   priority,
   size = 'medium',
-  badge
+  badge,
+  featured = false
 }: {
   item: Product;
   priority?: boolean;
-  size?: 'small' | 'medium' | 'large';
+  size?: 'small' | 'medium' | 'large' | 'tall' | 'wide';
   badge?: 'neu' | 'bestseller' | null;
+  featured?: boolean;
 }) {
   const sizeClasses = {
     small: 'col-span-1 row-span-1',
-    medium: 'col-span-1 row-span-2 md:col-span-2 md:row-span-1',
-    large: 'col-span-1 row-span-2 md:col-span-2 md:row-span-2'
+    medium: 'col-span-1 row-span-2',
+    large: 'col-span-2 row-span-2',
+    tall: 'col-span-1 row-span-3',
+    wide: 'col-span-2 row-span-1'
   };
 
-  const aspectClasses = {
-    small: 'aspect-square',
-    medium: 'aspect-[4/3] md:aspect-square',
-    large: 'aspect-square'
-  };
+  const stockLevel = Math.floor(Math.random() * 100); // Mock stock level
+  const stockPercentage = (stockLevel / 100) * 100;
+  const stockColor = stockLevel > 70 ? 'bg-green-500' : stockLevel > 30 ? 'bg-yellow-500' : 'bg-red-500';
 
   return (
     <div className={`group ${sizeClasses[size]} relative`}>
       <Link
-        className="block h-full"
+        className="block h-full focus:outline-none focus:ring-4 focus:ring-primary/30 focus:ring-offset-2 rounded-3xl"
         href={`/product/${item.handle}`}
         prefetch={true}
       >
-        {/* Main Card with Gradient Border */}
-        <div className="relative h-full bg-gradient-to-br from-primary/5 via-white to-secondary/5 rounded-3xl border-2 border-transparent bg-clip-padding shadow-sm hover:shadow-2xl transition-all duration-500 p-6 group-hover:scale-[1.02] overflow-hidden">
-          {/* Gradient Border Effect */}
-          <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-primary via-secondary to-accent p-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10">
-            <div className="h-full w-full rounded-3xl bg-white"></div>
+        {/* Main Card with Gradient Border and Tilt Effect */}
+        <div className={`relative h-full rounded-3xl overflow-hidden transition-all duration-700 group-hover:scale-[1.02] group-hover:rotate-1 shadow-lg hover:shadow-2xl card-tilt ${
+          featured 
+            ? 'bg-gradient-to-br from-primary/10 via-white to-accent/5' 
+            : 'bg-white'
+        }`}>
+          
+          {/* Rotating Gradient Border */}
+          <div className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+            <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-primary via-accent to-secondary p-[2px] animate-gradient">
+              <div className="h-full w-full rounded-3xl bg-white"></div>
+            </div>
           </div>
 
-          {/* Badge */}
-          {badge && (
-            <div className={`absolute -top-1 -right-1 px-3 py-1 text-xs font-bold text-white rounded-full transform rotate-12 shadow-lg z-10 ${
-              badge === 'neu' ? 'bg-gradient-to-r from-accent to-yellow-400' : 'bg-gradient-to-r from-primary to-primary-600'
-            }`}>
-              {badge === 'neu' ? 'NEU' : 'BESTSELLER'}
-            </div>
+          {/* Bestseller Glow Effect */}
+          {badge === 'bestseller' && (
+            <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-primary/20 to-accent/20 blur-xl animate-pulse -z-10"></div>
           )}
 
-          <div className={`h-full flex flex-col ${aspectClasses[size]}`}>
-            {/* Product Image Container with Dual Image Effect */}
-            <div className="flex-1 relative flex items-center justify-center mb-4 overflow-hidden rounded-2xl">
+          {/* Content Container */}
+          <div className="relative h-full p-6 flex flex-col">
+            
+            {/* Badge */}
+            {badge && (
+              <div className={`absolute -top-2 -right-2 px-3 py-1 text-xs font-bold text-white rounded-full transform rotate-12 shadow-xl z-20 ${
+                badge === 'neu' 
+                  ? 'bg-gradient-to-r from-accent to-yellow-400 animate-bounce' 
+                  : 'bg-gradient-to-r from-primary to-primary-600'
+              }`}>
+                {badge === 'neu' ? 'NEU' : 'BESTSELLER'}
+              </div>
+            )}
+
+            {/* Stock Level Indicator */}
+            <div className="absolute top-0 left-0 right-0 h-1 bg-gray-200 rounded-t-3xl overflow-hidden">
+              <div 
+                className={`h-full ${stockColor} transition-all duration-500`}
+                style={{ width: `${stockPercentage}%` }}
+              ></div>
+            </div>
+
+            {/* Product Image Container */}
+            <div className={`flex-1 relative flex items-center justify-center mb-4 rounded-2xl overflow-hidden ${
+              size === 'large' ? 'mb-6' : 'mb-4'
+            }`}>
+              
               {/* Primary Image */}
               <img
                 src={item.featuredImage?.url || '/placeholder-straw.jpg'}
                 alt={item.title}
-                className="max-h-32 w-full object-contain transition-all duration-700 group-hover:opacity-0 group-hover:scale-110"
+                className={`object-contain transition-all duration-700 group-hover:opacity-0 group-hover:scale-110 ${
+                  size === 'large' ? 'h-48 max-w-full' : 'h-32 max-w-full'
+                }`}
+                loading={priority ? 'eager' : 'lazy'}
               />
               
               {/* Secondary Image (appears on hover) */}
               <img
                 src={item.images?.[1]?.url || item.featuredImage?.url || '/placeholder-straw.jpg'}
                 alt={`${item.title} - Alternative view`}
-                className="absolute inset-0 max-h-32 w-full object-contain opacity-0 scale-95 transition-all duration-700 group-hover:opacity-100 group-hover:scale-105"
+                className={`absolute inset-0 object-contain opacity-0 scale-95 transition-all duration-700 group-hover:opacity-100 group-hover:scale-105 ${
+                  size === 'large' ? 'h-48 max-w-full' : 'h-32 max-w-full'
+                }`}
               />
 
-              {/* Product Tags */}
-              <div className="absolute top-2 left-2 flex gap-1 flex-wrap">
-                <span className="px-2 py-1 text-xs font-medium bg-primary/10 text-primary rounded-full backdrop-blur-sm">
+              {/* Category Pills */}
+              <div className="absolute top-3 left-3 flex flex-col gap-1">
+                <span className="px-2 py-1 text-xs font-medium bg-primary/90 text-white rounded-full backdrop-blur-sm shadow-sm">
                   Eco
                 </span>
-                <span className="px-2 py-1 text-xs font-medium bg-secondary/10 text-secondary rounded-full backdrop-blur-sm">
+                <span className="px-2 py-1 text-xs font-medium bg-accent/90 text-white rounded-full backdrop-blur-sm shadow-sm">
                   Premium
                 </span>
+              </div>
+
+              {/* Floating Price Tag */}
+              <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
+                <div className="bg-white/90 backdrop-blur-md border border-white/20 text-secondary px-3 py-1 rounded-full font-bold text-sm shadow-lg">
+                  CHF {item.priceRange.minVariantPrice.amount}
+                </div>
               </div>
             </div>
             
             {/* Product Info */}
-            <div className="text-center relative">
-              <h3 className="font-extrabold text-lg text-secondary mb-2 line-clamp-2 group-hover:text-primary transition-colors duration-300">
+            <div className="relative">
+              <h3 className={`font-bold text-secondary mb-2 line-clamp-2 group-hover:text-primary transition-colors duration-300 ${
+                size === 'large' ? 'text-xl' : 'text-lg'
+              }`}>
                 {item.title}
               </h3>
-              <p className="text-sm text-secondary/60 mb-3">
-                Premium Qualität, bewährt
-              </p>
               
-              {/* Price Badge with Glassmorphism */}
-              <div className="relative inline-block">
-                <div className="bg-gradient-to-r from-primary to-primary-600 text-white px-4 py-2 rounded-xl font-bold text-sm shadow-lg backdrop-blur-sm border border-white/20">
+              {size === 'large' && (
+                <p className="text-sm text-secondary/60 mb-4 line-clamp-2">
+                  Premium Qualität für höchste Ansprüche. Bewährt und zuverlässig in jeder Situation.
+                </p>
+              )}
+              
+              {/* Price Display */}
+              <div className="flex items-center justify-between mb-4">
+                <div className="text-lg font-bold text-secondary">
                   Ab CHF {item.priceRange.minVariantPrice.amount}
                 </div>
+                {stockLevel < 20 && (
+                  <span className="text-xs text-red-600 font-medium bg-red-50 px-2 py-1 rounded-full">
+                    Nur noch {stockLevel} verfügbar
+                  </span>
+                )}
               </div>
 
-              {/* Quick Add Button - appears on hover */}
-              <div className="absolute -bottom-12 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 group-hover:-translate-y-2 transition-all duration-300">
-                <button className="bg-secondary text-white px-6 py-2 rounded-full font-semibold text-sm hover:bg-secondary-600 transition-colors duration-200 shadow-xl backdrop-blur-sm border border-white/10">
-                  Quick Add
+              {/* Quick-View Button (slides from bottom) */}
+              <div className="absolute -bottom-16 left-0 right-0 opacity-0 group-hover:opacity-100 group-hover:-translate-y-12 transition-all duration-500 transform translate-y-4">
+                <button className="w-full bg-secondary text-white py-3 rounded-xl font-semibold text-sm hover:bg-secondary-600 transition-colors duration-200 shadow-xl backdrop-blur-sm border border-white/10">
+                  Quick View
                 </button>
               </div>
             </div>
           </div>
         </div>
       </Link>
+    </div>
+  );
+}
+
+// Loading Skeleton Component
+function BentoGridSkeleton() {
+  return (
+    <div className="max-w-6xl mx-auto">
+      <div className="grid grid-cols-1 md:grid-cols-4 grid-rows-auto md:grid-rows-3 gap-6 min-h-[800px]">
+        {/* Featured Large Card */}
+        <div className="col-span-1 md:col-span-2 row-span-2 rounded-3xl overflow-hidden">
+          <div className="h-full animate-skeleton"></div>
+        </div>
+        
+        {/* Medium Cards */}
+        <div className="col-span-1 row-span-2 rounded-3xl overflow-hidden">
+          <div className="h-full animate-skeleton"></div>
+        </div>
+        
+        <div className="col-span-1 row-span-1 rounded-3xl overflow-hidden">
+          <div className="h-full animate-skeleton"></div>
+        </div>
+        
+        <div className="col-span-1 md:col-span-2 row-span-1 rounded-3xl overflow-hidden">
+          <div className="h-full animate-skeleton"></div>
+        </div>
+        
+        <div className="col-span-1 row-span-1 rounded-3xl overflow-hidden">
+          <div className="h-full animate-skeleton"></div>
+        </div>
+      </div>
     </div>
   );
 }
@@ -125,7 +207,7 @@ export async function ThreeItemGrid() {
     try {
       const { getProducts } = await import('lib/shopify');
       const allProducts = await getProducts({});
-      homepageItems = allProducts.slice(0, 3); // Take first 3 products
+      homepageItems = allProducts.slice(0, 6); // Take first 6 products for better grid
       console.log(`Using ${homepageItems.length} products from Shopify for homepage`);
     } catch (error) {
       console.log('Shopify unavailable, using mock products for homepage');
@@ -137,35 +219,63 @@ export async function ThreeItemGrid() {
     homepageItems = mockProducts;
   }
 
-  // Ensure we have at least 3 products by duplicating if necessary
-  while (homepageItems.length < 3 && mockProducts.length > 0) {
-    homepageItems.push(mockProducts[0]!);
+  // Ensure we have at least 6 products by duplicating if necessary
+  while (homepageItems.length < 6 && mockProducts.length > 0) {
+    homepageItems.push(mockProducts[homepageItems.length % mockProducts.length]!);
   }
 
-  const firstProduct = homepageItems[0]!;
-  const secondProduct = homepageItems[1]!;
-  const thirdProduct = homepageItems[2]!;
+  // Show loading skeleton if no products
+  if (!homepageItems.length) {
+    return <BentoGridSkeleton />;
+  }
 
   return (
     <div className="max-w-6xl mx-auto">
-      {/* Asymmetric Bento Grid */}
-      <div className="grid grid-cols-2 md:grid-cols-4 grid-rows-3 md:grid-rows-2 gap-6 min-h-[600px] md:min-h-[500px]">
-        <ThreeItemGridItem 
-          item={firstProduct} 
+      {/* Modern Asymmetric Bento Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-4 grid-rows-auto md:grid-rows-3 gap-6 min-h-[800px]">
+        
+        {/* Featured Large Product - spans 2x2 */}
+        <BentoGridItem 
+          item={homepageItems[0]!} 
           priority={true} 
           size="large"
           badge="bestseller"
+          featured={true}
         />
-        <ThreeItemGridItem 
-          item={secondProduct} 
+        
+        {/* Tall Product - spans 1x2 */}
+        <BentoGridItem 
+          item={homepageItems[1]!} 
           priority={true} 
-          size="small"
+          size="medium"
           badge="neu"
         />
-        <ThreeItemGridItem 
-          item={thirdProduct} 
-          size="medium"
+        
+        {/* Small Product - spans 1x1 */}
+        <BentoGridItem 
+          item={homepageItems[2]!} 
+          size="small"
         />
+        
+        {/* Wide Product - spans 2x1 */}
+        <BentoGridItem 
+          item={homepageItems[3]!} 
+          size="wide"
+        />
+        
+        {/* Another Small Product - spans 1x1 */}
+        <BentoGridItem 
+          item={homepageItems[4]!} 
+          size="small"
+        />
+        
+        {/* Final Product if available */}
+        {homepageItems[5] && (
+          <BentoGridItem 
+            item={homepageItems[5]} 
+            size="small"
+          />
+        )}
       </div>
     </div>
   );

@@ -288,3 +288,97 @@ button {
 .backdrop-blur-3xl {
   backdrop-filter: blur(64px);
 }
+
+/* Bento Grid Animations */
+@keyframes gradient-shift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.animate-gradient {
+  background-size: 400% 400%;
+  animation: gradient-shift 6s ease infinite;
+}
+
+/* Loading skeleton gradient animation */
+@keyframes skeleton-shimmer {
+  0% {
+    background-position: -200px 0;
+  }
+  100% {
+    background-position: 200px 0;
+  }
+}
+
+.animate-skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200px 100%;
+  animation: skeleton-shimmer 1.5s infinite;
+}
+
+/* Card tilt effect */
+.card-tilt {
+  transform-style: preserve-3d;
+  transition: transform 0.5s ease;
+}
+
+.card-tilt:hover {
+  transform: perspective(1000px) rotateX(5deg) rotateY(5deg) scale3d(1.02, 1.02, 1.02);
+}
+
+/* Stroke text styles for Hero Section */
+.stroke-text {
+  -webkit-text-stroke: 3px #003B46;
+  text-stroke: 3px #003B46;
+}
+
+.stroke-text-thin {
+  -webkit-text-stroke: 1px #003B46;
+  text-stroke: 1px #003B46;
+}
+
+.writing-vertical-rl {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+}
+
+.writing-mode-vertical {
+  writing-mode: vertical-lr;
+  text-orientation: mixed;
+}
+
+/* Brutal Product Cards Custom Styles */
+.brutal-product-container {
+  position: relative !important;
+  overflow: visible !important;
+  min-height: 600px !important;
+}
+
+.brutal-product-container .absolute {
+  transition: all 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+}
+
+.brutal-product-container .absolute:hover {
+  z-index: 50 !important;
+}
+
+/* Enhanced shadow effects */
+.brutal-product-container .shadow-\[20px_20px_0px_\#00BFA6\]:hover {
+  box-shadow: 25px 25px 0px #FFD54F !important;
+}
+
+.brutal-product-container .shadow-\[15px_15px_0px_black\]:hover {
+  box-shadow: 20px 20px 0px #FFD54F !important;
+}
+
+.brutal-product-container .shadow-\[12px_12px_0px_\#FFD54F\]:hover {
+  box-shadow: 15px 15px 0px #00BFA6 !important;
+}
+
+.brutal-product-container .shadow-\[10px_10px_0px_black\]:hover {
+  box-shadow: 15px 15px 0px #00BFA6 !important;
+}
