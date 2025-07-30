@@ -1,8 +1,9 @@
 import { CartProvider } from 'components/cart/cart-context';
+import PerformanceProvider from 'components/dev/PerformanceProvider';
 import Navbar from 'components/layout/navbar';
 import ScrollToTop from 'components/scroll-to-top';
 import { WelcomeToast } from 'components/welcome-toast';
-import { GeistSans } from 'geist/font/sans';
+import { inter } from 'lib/fonts';
 import { getCart } from 'lib/shopify';
 import { performStartupCheck } from 'lib/shopify/validate-config';
 import { baseUrl } from 'lib/utils';
@@ -58,8 +59,8 @@ export default async function RootLayout({
   const cart = cartId ? getCart(cartId) : Promise.resolve(undefined);
 
   return (
-    <html lang="de" className={`${GeistSans.variable} scroll-smooth`}>
-      <body className="bg-neutral text-secondary selection:bg-primary selection:text-white antialiased overflow-x-hidden">
+    <html lang="de" className={`${inter.variable} scroll-smooth`}>
+      <body className="bg-neutral text-secondary selection:bg-primary selection:text-white antialiased overflow-x-hidden font-sans">
         <CartProvider cartPromise={cart}>
           <Navbar />
           <main className="relative">
@@ -78,6 +79,7 @@ export default async function RootLayout({
             <WelcomeToast />
           </main>
           <ScrollToTop />
+          <PerformanceProvider />
         </CartProvider>
       </body>
     </html>

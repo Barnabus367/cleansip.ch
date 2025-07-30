@@ -1,6 +1,6 @@
 import CleanSipDifferenceSection from 'components/CleanSipDifferenceSection';
 import HeroSection from 'components/HeroSection';
-import ProductsSection from 'components/ProductsSection';
+import ProductsSection from 'components/ProductsSection-new';
 import RevolutionaryProblemSolutionSection from 'components/RevolutionaryProblemSolutionSection';
 import TestimonialsSection from 'components/TestimonialsSection';
 import TrustSection from 'components/TrustSection';
