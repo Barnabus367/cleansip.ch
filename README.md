@@ -1,4 +1,159 @@
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fvercel%2Fcommerce&project-name=commerce&repo-name=commerce&demo-title=Next.js%20Commerce&demo-url=https%3A%2F%2Fdemo.vercel.store&demo-image=https%3A%2F%2Fbigcommerce-demo-asset-ksvtgfvnd.vercel.app%2Fbigcommerce.png&env=COMPANY_NAME,SHOPIFY_REVALIDATION_SECRET,SHOPIFY_STORE_DOMAIN,SHOPIFY_STOREFRONT_ACCESS_TOKEN,SITE_NAME)
+# CleanSip - Headless E-Commerce Shop
+
+**"Nie mehr matschige Alternativen."**
+
+CleanSip ist ein moderner Headless-Shop für bewährte Kunststoff-Party-Basics, gebaut auf Next.js 14 + Tailwind CSS mit Shopify als Backend.
+
+## 🎯 Projekt-Übersicht
+
+### Brand DNA
+- **Markenname**: CleanSip
+- **Claim**: "Nie mehr matschige Alternativen."
+- **Brand Voice**: Sachlich, lösungsorientiert, leichte Provokation gegen "Pappe & Bambus"
+- **Zielgruppe**: Event-Planer, Gastronomen, Privatkunden in der Schweiz
+
+### USP-Bullets
+- ✅ 100% Kunststoff-Qualität – kein Aufweichen
+- 🇨🇭 Schweizer Lager: 48-h-Zustellung  
+- 🔒 Bewährte Hygiene-Standards (BPA-frei, lebensmittelecht)
+
+## 📦 Produktsortiment
+
+### Aktuell verfügbar
+1. **CS-100** | CleanSip Strohhalme 100er Pack | 14.90 CHF | 120g
+
+### Coming Soon (Q3 2025)
+2. **PC-50** | Classic Party Cups 50er Pack | 12.90 CHF | 500g
+3. **PS-100** | Pro Stirrer 100er Pack | 5.90 CHF | 150g  
+4. **FB-40** | Flex Fork & Knife 40er Kit | 9.80 CHF | 300g
+
+## 🎨 Design System
+
+### Farben (Tailwind Extended)
+```css
+primary:   #00BFA6   /* Mint-Türkis */
+secondary: #003B46   /* Tiefes Petrol */  
+accent:    #FFD54F   /* Warmes Gelb */
+neutral:   #F9FAFB   /* Hellgrau */
+```
+
+### Typografie
+- **Base Font**: Inter, system-ui
+- **Hierarchie**: Klare Strukturierung mit serifenloser Schrift
+
+## 🚀 Tech Stack
+
+- **Framework**: Next.js 15.3.0 (App Router)
+- **Styling**: Tailwind CSS v4
+- **Backend**: Shopify Storefront API
+- **TypeScript**: Vollständig typisiert
+- **Image Optimization**: Next.js Image Component
+- **Deployment**: Vercel-ready
+
+## 🛠 Development Setup
+
+### Installation
+```bash
+# Dependencies installieren
+npm install
+
+# Development Server starten  
+npm run dev
+
+# Production Build
+npm run build
+
+# Linting
+npm run prettier:check
+```
+
+### Environment Variables
+Erstelle eine `.env.local` Datei:
+```bash
+COMPANY_NAME="CleanSip"
+SITE_NAME="CleanSip"
+SHOPIFY_REVALIDATION_SECRET="your-secret-here"
+SHOPIFY_STOREFRONT_ACCESS_TOKEN="your-token-here"  
+SHOPIFY_STORE_DOMAIN="your-store.myshopify.com"
+```
+
+## 📱 Features Implementiert
+
+### ✅ Core Funktionalität
+- [x] **Homepage mit Hero-Section** - CleanSip Branding & USPs
+- [x] **Responsive Navigation** - Mehrprodukt-Kategorien vorbereitet
+- [x] **Produktgrid** - Mit Fallback auf Mock-Daten bei Shopify-Ausfall
+- [x] **Coming Soon Seite** - Newsletter-Anmeldung für künftige Produkte
+- [x] **Produktdetailseite** - Vollständig ausgearbeitet für Strohhalme
+- [x] **Mehrsprachig (DE-CH)** - Schweizer Zielgruppe optimiert
+
+### ✅ Business Logic
+- [x] **Versandlogik** - CHF 2.50 / 7.00 / Gratis ab CHF 50
+- [x] **Regulatory Compliance** - Hinweise zu CH-Gesetzgebung
+- [x] **Mock-Daten Fallback** - Funktioniert ohne Shopify-Setup
+- [x] **SEO-Optimiert** - Meta-Tags, OpenGraph, deutsche Suchbegriffe
+
+### ✅ UX/UI Features  
+- [x] **Brand-konsistente Farbpalette** - Primary/Secondary/Accent
+- [x] **Accessibility** - Focus States, Screen Reader Support
+- [x] **Performance** - Optimierte Images, Lazy Loading
+- [x] **Mobile-First** - Responsive Grid & Navigation
+
+## 🎯 Nächste Schritte
+
+### Phase 1: Shopify Integration
+- [ ] Shopify Store Setup mit echten Produkten
+- [ ] Storefront API Token konfigurieren  
+- [ ] Inventory Management aktivieren
+- [ ] Payment Gateway (Stripe/PostFinance) setup
+
+### Phase 2: Advanced Features
+- [ ] Cart Functionality mit persistenter Session
+- [ ] Customer Accounts & Login
+- [ ] Bestellhistorie & Tracking
+- [ ] Newsletter-Integration (Shopify Customer API)
+
+### Phase 3: Marketing & Analytics
+- [ ] Google Analytics / Plausible Setup
+- [ ] SEO-Audit & Content-Optimierung
+- [ ] Social Media Integration  
+- [ ] A/B Testing für Conversion-Optimierung
+
+## 🚚 Versandoptionen
+
+| Methode | Preis | Gewichtslimit | Tracking |
+|---------|-------|---------------|----------|
+| A-Post Brief | CHF 2.50 | bis 120g | ❌ |
+| PostPac Economy | CHF 7.00 | bis 2kg | ✅ |
+| **Gratis Versand** | CHF 0.00 | ab CHF 50 | ✅ |
+
+*Alle Sendungen: 48h Zustellung aus Schweizer Lager*
+
+## 📄 Rechtliches
+
+### Compliance
+- **Aktuell in der Schweiz erlaubt** - Keine EU-Pappe-Regulierung
+- **BPA-frei & lebensmittelecht** - Erfüllt CH-Hygienestandards
+- **Rest-Stock Verkauf** - "Solange erlaubt" Positionierung
+
+### Datenschutz  
+- DSGVO-konform für EU-Kunden
+- Schweizer Datenschutzgesetz-konform
+- Cookie-Banner Integration geplant
+
+---
+
+## 💡 Brand Positioning
+
+**CleanSip positioniert sich bewusst als Alternative zu "matschigen" nachhaltigen Lösungen.** 
+
+Wir sprechen Kunden an, die Wert auf **Funktionalität** und **Zuverlässigkeit** legen, ohne auf **Hygiene-Standards** zu verzichten. Die sachliche, leicht provokante Brand Voice unterscheidet uns von "Öko-Wellness"-Konkurrenten.
+
+**Kern-Message**: *"Warum Kompromisse eingehen, wenn es auch stabil geht?"*
+
+---
+
+**Built with ❤️ for stable alternatives** | [cleansip.ch](https://cleansip.ch)
 
 # Next.js Commerce
 

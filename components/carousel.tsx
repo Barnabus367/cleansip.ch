@@ -1,10 +1,24 @@
+import { mockProducts } from 'lib/mock-data';
 import { getCollectionProducts } from 'lib/shopify';
+import type { Product } from 'lib/shopify/types';
 import Link from 'next/link';
 import { GridTileImage } from './grid/tile';
 
 export async function Carousel() {
-  // Collections that start with `hidden-*` are hidden from the search page.
-  const products = await getCollectionProducts({ collection: 'hidden-homepage-carousel' });
+  // Try to get products from Shopify, fallback to mock data
+  let products: Product[] = [];
+  
+  try {
+    // Collections that start with `hidden-*` are hidden from the search page.
+    products = await getCollectionProducts({ collection: 'hidden-homepage-carousel' });
+  } catch (error) {
+    console.log('Shopify unavailable, using mock products for carousel');
+  }
+
+  // If no products from Shopify, use mock data
+  if (!products?.length) {
+    products = mockProducts;
+  }
 
   if (!products?.length) return null;
 
