@@ -742,6 +742,245 @@ select {
 
 /* Animation CSS for Hero Section */
 @layer utilities {
+  /* WebGL and 3D Animation Classes */
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+  
+  .animate-float-delayed {
+    animation: float 6s ease-in-out infinite;
+    animation-delay: 2s;
+  }
+  
+  /* Liquid Typography Animations */
+  .animate-liquid-load {
+    animation: liquidLoad 2s ease-out;
+  }
+  
+  .animate-stagger-in {
+    animation: staggerIn 0.8s ease-out forwards;
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  
+  .animate-drip {
+    animation: drip 2s ease-in forwards;
+  }
+  
+  /* Glitch Typography Animations */
+  .animate-glitch-shake {
+    animation: glitchShake 0.3s ease-in-out infinite;
+  }
+  
+  .animate-glitch-lines {
+    animation: glitchLines 0.5s linear infinite;
+  }
+  
+  /* Particle System Animations */
+  .animate-particle-float {
+    animation: particleFloat 10s linear infinite;
+  }
+  
+  /* Background Gradient Animation */
+  .animate-gradient {
+    animation: gradientShift 8s ease-in-out infinite;
+    background-size: 200% 200%;
+  }
+  
+  /* Pulse animation for subtle elements */
+  .animate-pulse-slow {
+    animation: pulseSlow 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+  
+  /* Confetti Animation */
+  .animate-confetti-fall {
+    animation: confettiFall 3s ease-out forwards;
+  }
+  
+  /* Scroll-triggered animations */
+  .animate-fade-in-up {
+    animation: fadeInUp 0.8s ease-out forwards;
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  
+  /* Interactive hover states */
+  .hover-liquid:hover {
+    filter: url(#liquid-filter);
+    transition: filter 0.3s ease;
+  }
+  
+  .hover-glitch:hover {
+    filter: url(#glitch-filter);
+    animation: glitchShake 0.1s infinite;
+  }
+}
+
+/* Keyframe Definitions */
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-10px) rotate(1deg); }
+}
+
+@keyframes liquidLoad {
+  0% { 
+    transform: scale(0.8) translateY(20px);
+    opacity: 0;
+    filter: blur(4px);
+  }
+  60% { 
+    transform: scale(1.05) translateY(-5px);
+    opacity: 0.8;
+    filter: blur(1px);
+  }
+  100% { 
+    transform: scale(1) translateY(0px);
+    opacity: 1;
+    filter: blur(0px);
+  }
+}
+
+@keyframes staggerIn {
+  0% {
+    opacity: 0;
+    transform: translateY(20px) rotate(-5deg);
+  }
+  60% {
+    opacity: 0.8;
+    transform: translateY(-2px) rotate(2deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0px) rotate(0deg);
+  }
+}
+
+@keyframes drip {
+  0% {
+    transform: translateY(0px) scale(1);
+    opacity: 0.8;
+  }
+  70% {
+    transform: translateY(30px) scale(0.8);
+    opacity: 0.4;
+  }
+  100% {
+    transform: translateY(60px) scale(0.3);
+    opacity: 0;
+  }
+}
+
+@keyframes glitchShake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-2px); }
+  40% { transform: translateX(2px); }
+  60% { transform: translateX(-1px); }
+  80% { transform: translateX(1px); }
+}
+
+@keyframes glitchLines {
+  0% { 
+    transform: scaleX(0);
+    opacity: 0.8;
+  }
+  50% { 
+    transform: scaleX(1);
+    opacity: 0.3;
+  }
+  100% { 
+    transform: scaleX(0);
+    opacity: 0;
+  }
+}
+
+@keyframes particleFloat {
+  0% {
+    transform: translateY(100vh) translateX(0px) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.6;
+  }
+  90% {
+    opacity: 0.2;
+  }
+  100% {
+    transform: translateY(-100px) translateX(50px) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes pulseSlow {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 0.2; }
+}
+
+@keyframes confettiFall {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotate(720deg);
+    opacity: 0;
+  }
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* CSS Custom Properties for Theme Support */
+:root {
+  --svg-grid-opacity: 0.1;
+  --svg-grid-primary: rgba(0, 59, 70, 0.1);
+  --svg-grid-stroke-width: 0.5;
+  --particle-primary: #00BFA6;
+  --particle-secondary: #003B46;
+  --particle-accent: #FFD54F;
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  .animate-float,
+  .animate-liquid-load,
+  .animate-stagger-in,
+  .animate-drip,
+  .animate-glitch-shake,
+  .animate-particle-float,
+  .animate-gradient,
+  .animate-pulse-slow,
+  .animate-confetti-fall {
+    animation: none;
+  }
+  
+  .hover-liquid:hover,
+  .hover-glitch:hover {
+    filter: none;
+  }
+}
+
+/* High Contrast Support */
+@media (prefers-contrast: high) {
+  :root {
+    --svg-grid-opacity: 0.3;
+    --svg-grid-primary: rgba(0, 59, 70, 0.5);
+    --svg-grid-stroke-width: 1;
+  }
+}
   /* Keyframe Animations */
   @keyframes float {
     0%, 100% { transform: translateY(0); }
@@ -815,4 +1054,3 @@ select {
     writing-mode: vertical-rl;
     text-orientation: mixed;
   }
-}
