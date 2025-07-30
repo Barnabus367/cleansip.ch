@@ -28,4 +28,13 @@ export const TAGS = {
 
 export const HIDDEN_PRODUCT_TAG = 'nextjs-frontend-hidden';
 export const DEFAULT_OPTION = 'Default Title';
+
+// Feature flags for product categories
+export const FEATURE_FLAGS = {
+  SHOW_STROHHALME: true,      // Currently available
+  SHOW_PARTY_CUPS: false,    // Coming soon - set to true when ready
+  SHOW_RUEHRSTABCHEN: false, // Coming soon - set to true when ready  
+  SHOW_BESTECK: false,       // Coming soon - set to true when ready
+  SHOW_COMING_SOON_PAGE: true // Show coming soon for unavailable products
+} as const;
 export const SHOPIFY_GRAPHQL_API_ENDPOINT = '/api/2023-01/graphql.json';

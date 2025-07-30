@@ -1,5 +1,5 @@
 import Link from 'next/link';
-
+import { FEATURE_FLAGS } from 'lib/constants';
 import { getMenu } from 'lib/shopify';
 
 export default async function Footer() {
@@ -37,10 +37,18 @@ export default async function Footer() {
           <div>
             <h3 className="font-semibold text-secondary mb-3">Produkte</h3>
             <ul className="space-y-2 text-xs">
-              <li><Link href="/search/strohhalme" className="hover:text-primary transition-colors">Strohhalme</Link></li>
-              <li><Link href="/coming-soon" className="hover:text-primary transition-colors">Party Cups</Link></li>
-              <li><Link href="/coming-soon" className="hover:text-primary transition-colors">Rührstäbchen</Link></li>
-              <li><Link href="/coming-soon" className="hover:text-primary transition-colors">Besteck</Link></li>
+              {FEATURE_FLAGS.SHOW_STROHHALME && (
+                <li><Link href="/search/strohhalme" className="hover:text-primary transition-colors">Strohhalme</Link></li>
+              )}
+              {!FEATURE_FLAGS.SHOW_PARTY_CUPS && (
+                <li><Link href="/coming-soon" className="hover:text-primary transition-colors">Party Cups <span className="text-accent text-xs">(Coming Soon)</span></Link></li>
+              )}
+              {!FEATURE_FLAGS.SHOW_RUEHRSTABCHEN && (
+                <li><Link href="/coming-soon" className="hover:text-primary transition-colors">Rührstäbchen <span className="text-accent text-xs">(Coming Soon)</span></Link></li>
+              )}
+              {!FEATURE_FLAGS.SHOW_BESTECK && (
+                <li><Link href="/coming-soon" className="hover:text-primary transition-colors">Besteck <span className="text-accent text-xs">(Coming Soon)</span></Link></li>
+              )}
             </ul>
           </div>
           

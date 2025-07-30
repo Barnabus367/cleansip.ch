@@ -1,6 +1,7 @@
 import { CartProvider } from 'components/cart/cart-context';
 import { Navbar } from 'components/layout/navbar';
 import { WelcomeToast } from 'components/welcome-toast';
+import ScrollToTop from 'components/scroll-to-top';
 import { GeistSans } from 'geist/font/sans';
 import { getCart } from 'lib/shopify';
 import { baseUrl } from 'lib/utils';
@@ -48,15 +49,26 @@ export default async function RootLayout({
   const cart = getCart();
 
   return (
-    <html lang="de" className={GeistSans.variable}>
-      <body className="bg-neutral text-secondary selection:bg-primary selection:text-white dark:bg-secondary dark:text-neutral dark:selection:bg-primary dark:selection:text-white">
+    <html lang="de" className={`${GeistSans.variable} scroll-smooth`}>
+      <body className="bg-neutral text-secondary selection:bg-primary selection:text-white antialiased overflow-x-hidden">
         <CartProvider cartPromise={cart}>
           <Navbar />
-          <main>
+          <main className="relative">
             {children}
-            <Toaster closeButton />
+            <Toaster 
+              closeButton 
+              position="top-right"
+              toastOptions={{
+                style: {
+                  background: 'white',
+                  border: '1px solid #E5E7EB',
+                  color: '#374151',
+                },
+              }}
+            />
             <WelcomeToast />
           </main>
+          <ScrollToTop />
         </CartProvider>
       </body>
     </html>

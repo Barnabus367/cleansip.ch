@@ -3,8 +3,9 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
+import { FEATURE_FLAGS } from 'lib/constants';
 
-// Future products data
+// Future products data - controlled by feature flags
 const futureProducts = [
   {
     id: 'PC-50',
@@ -12,7 +13,8 @@ const futureProducts = [
     price: '12.90 CHF',
     weight: '500 g',
     icon: '/brand/icons/icon-cup.svg',
-    description: 'Stabile Plastikbecher für deine Party – ohne Durchweichen oder Bruch.'
+    description: 'Stabile Plastikbecher für deine Party – ohne Durchweichen oder Bruch.',
+    featureFlag: 'SHOW_PARTY_CUPS'
   },
   {
     id: 'PS-100', 
@@ -20,7 +22,8 @@ const futureProducts = [
     price: '5.90 CHF',
     weight: '150 g',
     icon: '/brand/icons/icon-straw.svg',
-    description: 'Holzfreie Rührstäbchen für jeden Anlass – hygienisch und stabil.'
+    description: 'Holzfreie Rührstäbchen für jeden Anlass – hygienisch und stabil.',
+    featureFlag: 'SHOW_RUEHRSTABCHEN'
   },
   {
     id: 'FB-40',
@@ -28,7 +31,8 @@ const futureProducts = [
     price: '9.80 CHF',
     weight: '300 g', 
     icon: '/brand/icons/icon-delivery.svg',
-    description: 'Kunststoff-Besteck-Kit für unterwegs – praktisch und robust.'
+    description: 'Kunststoff-Besteck-Kit für unterwegs – praktisch und robust.',
+    featureFlag: 'SHOW_BESTECK'
   }
 ];
 
@@ -36,6 +40,11 @@ export default function ComingSoonPage() {
   const [email, setEmail] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [selectedProducts, setSelectedProducts] = useState<string[]>([]);
+
+  // Filter products based on feature flags - only show products that are NOT yet available
+  const visibleProducts = futureProducts.filter(product => 
+    !FEATURE_FLAGS[product.featureFlag as keyof typeof FEATURE_FLAGS]
+  );
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -51,6 +60,28 @@ export default function ComingSoonPage() {
         : [...prev, productId]
     );
   };
+
+  // If no products are in coming soon state, redirect to main shop
+  if (visibleProducts.length === 0) {
+    return (
+      <div className="bg-neutral min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-4xl font-bold tracking-tight text-secondary mb-4">
+            Alle Produkte sind jetzt verfügbar!
+          </h1>
+          <p className="text-lg text-secondary/80 mb-8">
+            Entdecke unser komplettes Sortiment im Shop.
+          </p>
+          <Link 
+            href="/" 
+            className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-primary hover:bg-primary/90 transition-colors"
+          >
+            Zum Shop
+          </Link>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-neutral min-h-screen">
@@ -78,7 +109,7 @@ export default function ComingSoonPage() {
 
         {/* Product Preview */}
         <div className="mx-auto mt-16 grid max-w-6xl gap-8 lg:grid-cols-3">
-          {futureProducts.map((product) => (
+          {visibleProducts.map((product) => (
             <div 
               key={product.id} 
               className={`rounded-lg border p-6 shadow-sm transition-all cursor-pointer ${

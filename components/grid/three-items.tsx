@@ -6,37 +6,43 @@ import Link from 'next/link';
 
 function ThreeItemGridItem({
   item,
-  size,
   priority
 }: {
   item: Product;
-  size: 'full' | 'half';
   priority?: boolean;
 }) {
   return (
-    <div
-      className={size === 'full' ? 'md:col-span-4 md:row-span-2' : 'md:col-span-2 md:row-span-1'}
-    >
+    <div className="group">
       <Link
-        className="relative block aspect-square h-full w-full"
+        className="block"
         href={`/product/${item.handle}`}
         prefetch={true}
       >
-        <GridTileImage
-          src={item.featuredImage?.url || '/placeholder-straw.jpg'}
-          fill
-          sizes={
-            size === 'full' ? '(min-width: 768px) 66vw, 100vw' : '(min-width: 768px) 33vw, 100vw'
-          }
-          priority={priority}
-          alt={item.title}
-          label={{
-            position: size === 'full' ? 'center' : 'bottom',
-            title: item.title as string,
-            amount: item.priceRange.maxVariantPrice.amount,
-            currencyCode: item.priceRange.maxVariantPrice.currencyCode
-          }}
-        />
+        <div className="aspect-square bg-white rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 p-6 hover:border-primary/20">
+          <div className="h-full flex flex-col">
+            {/* Product Image */}
+            <div className="flex-1 flex items-center justify-center mb-4">
+              <img
+                src={item.featuredImage?.url || '/placeholder-straw.jpg'}
+                alt={item.title}
+                className="max-h-32 w-full object-contain group-hover:scale-105 transition-transform duration-300"
+              />
+            </div>
+            
+            {/* Product Info */}
+            <div className="text-center">
+              <h3 className="font-bold text-lg text-secondary mb-2 line-clamp-2">
+                {item.title}
+              </h3>
+              <p className="text-sm text-secondary/60 mb-3">
+                Premium Qualität, bewährt
+              </p>
+              <div className="bg-primary text-white px-4 py-2 rounded-xl font-bold text-sm">
+                Ab CHF {item.priceRange.minVariantPrice.amount}
+              </div>
+            </div>
+          </div>
+        </div>
       </Link>
     </div>
   );
@@ -47,12 +53,24 @@ export async function ThreeItemGrid() {
   let homepageItems: Product[] = [];
   
   try {
-    // Collections that start with `hidden-*` are hidden from the search page.
+    // First try: Collections that start with `hidden-*` are hidden from the search page.
     homepageItems = await getCollectionProducts({
       collection: 'hidden-homepage-featured-items'
     });
   } catch (error) {
-    console.log('Shopify unavailable, using mock products for homepage');
+    console.log('No featured collection found, trying to get all products');
+  }
+
+  // If no featured collection, try to get all available products
+  if (!homepageItems.length) {
+    try {
+      const { getProducts } = await import('lib/shopify');
+      const allProducts = await getProducts({});
+      homepageItems = allProducts.slice(0, 3); // Take first 3 products
+      console.log(`Using ${homepageItems.length} products from Shopify for homepage`);
+    } catch (error) {
+      console.log('Shopify unavailable, using mock products for homepage');
+    }
   }
 
   // If still no products, use mock data
@@ -70,10 +88,10 @@ export async function ThreeItemGrid() {
   const thirdProduct = homepageItems[2]!;
 
   return (
-    <section className="mx-auto grid max-w-7xl gap-4 px-4 pb-4 md:grid-cols-6 md:grid-rows-2 lg:max-h-[calc(100vh-200px)]">
-      <ThreeItemGridItem size="full" item={firstProduct} priority={true} />
-      <ThreeItemGridItem size="half" item={secondProduct} priority={true} />
-      <ThreeItemGridItem size="half" item={thirdProduct} />
-    </section>
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+      <ThreeItemGridItem item={firstProduct} priority={true} />
+      <ThreeItemGridItem item={secondProduct} priority={true} />
+      <ThreeItemGridItem item={thirdProduct} />
+    </div>
   );
 }
