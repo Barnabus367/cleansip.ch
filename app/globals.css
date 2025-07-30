@@ -1048,6 +1048,251 @@ select {
     background: linear-gradient(to bottom, rgba(255, 255, 255, 0.6), transparent);
     pointer-events: none;
   }
+
+/* Revolutionary CleanSip Animations */
+@layer utilities {
+  /* Rebellious Magnet Effect for CTAs */
+  .magnet-effect {
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .magnet-effect::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+    transition: all 0.5s ease;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  
+  .magnet-effect:hover::before {
+    width: 300px;
+    height: 300px;
+  }
+  
+  .magnet-effect:hover {
+    transform: scale(1.05) translateY(-2px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    filter: brightness(1.1);
+  }
+
+  /* Smooth Scroll for anchor links */
+  .smooth-scroll {
+    scroll-behavior: smooth;
+  }
+
+  /* Paper Melting Animation */
+  @keyframes paper-melt {
+    0% {
+      transform: scale(1) skew(0deg);
+      opacity: 1;
+      filter: blur(0px);
+    }
+    50% {
+      transform: scale(1.1) skew(2deg);
+      opacity: 0.7;
+      filter: blur(1px);
+    }
+    100% {
+      transform: scale(0.8) skew(5deg);
+      opacity: 0.3;
+      filter: blur(3px);
+    }
+  }
+  
+  .animate-paper-melt {
+    animation: paper-melt 2s ease-in-out forwards;
+  }
+
+  /* Rebellious Pulse Animation */
+  @keyframes rebellious-pulse {
+    0%, 100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+    50% {
+      transform: scale(1.05);
+      opacity: 0.8;
+    }
+  }
+  
+  .animate-rebellious-pulse {
+    animation: rebellious-pulse 2s ease-in-out infinite;
+  }
+
+  /* Swiss Quality Badge Animation */
+  @keyframes swiss-badge {
+    0% {
+      transform: rotate(-2deg) scale(0.9);
+      opacity: 0;
+    }
+    50% {
+      transform: rotate(1deg) scale(1.1);
+      opacity: 1;
+    }
+    100% {
+      transform: rotate(-2deg) scale(1);
+      opacity: 1;
+    }
+  }
+  
+  .animate-swiss-badge {
+    animation: swiss-badge 1s ease-out forwards;
+  }
+
+  /* Live Counter Animation */
+  @keyframes live-counter {
+    0% {
+      transform: scale(1);
+      color: #FFD54F;
+    }
+    25% {
+      transform: scale(1.02);
+      color: #FF6B35;
+    }
+    50% {
+      transform: scale(1.05);
+      color: #FF4757;
+    }
+    75% {
+      transform: scale(1.02);
+      color: #FF6B35;
+    }
+    100% {
+      transform: scale(1);
+      color: #FFD54F;
+    }
+  }
+  
+  .animate-live-counter {
+    animation: live-counter 3s ease-in-out infinite;
+  }
+
+  /* Testimonial Card Enhanced Hover */
+  @keyframes testimonial-hover {
+    0% {
+      transform: translateY(0) rotate(0deg);
+      box-shadow: 8px 8px 0 black;
+    }
+    100% {
+      transform: translateY(-8px) rotate(-1deg);
+      box-shadow: 12px 12px 0 #00BFA6;
+    }
+  }
+  
+  .animate-testimonial-hover:hover {
+    animation: testimonial-hover 0.3s ease-out forwards;
+  }
+
+  /* Google Reviews Badge Pulse */
+  @keyframes google-pulse {
+    0%, 100% {
+      transform: scale(1);
+      box-shadow: 0 0 0 0 rgba(66, 133, 244, 0.3);
+    }
+    50% {
+      transform: scale(1.02);
+      box-shadow: 0 0 0 10px rgba(66, 133, 244, 0);
+    }
+  }
+  
+  .animate-google-pulse {
+    animation: google-pulse 2s ease-in-out infinite;
+  }
+
+  /* Revolutionary Background Noise Pattern */
+  .noise-texture {
+    background-image: 
+      radial-gradient(circle at 1px 1px, rgba(0, 59, 70, 0.15) 1px, transparent 0);
+    background-size: 20px 20px;
+  }
+
+  /* Enhanced Brutal Shadows */
+  .shadow-brutal-red {
+    box-shadow: 8px 8px 0 #DC2626;
+  }
+  
+  .shadow-brutal-red-hover {
+    box-shadow: 12px 12px 0 #B91C1C;
+  }
+  
+  .shadow-brutal-green {
+    box-shadow: 8px 8px 0 #059669;
+  }
+  
+  .shadow-brutal-green-hover {
+    box-shadow: 12px 12px 0 #047857;
+  }
+
+  /* Staggered Animation Delays */
+  .stagger-delay-1 {
+    animation-delay: 0.1s;
+  }
+  
+  .stagger-delay-2 {
+    animation-delay: 0.2s;
+  }
+  
+  .stagger-delay-3 {
+    animation-delay: 0.3s;
+  }
+  
+  .stagger-delay-4 {
+    animation-delay: 0.4s;
+  }
+  
+  .stagger-delay-5 {
+    animation-delay: 0.5s;
+  }
+}
+
+/* Enhanced Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .magnet-effect,
+  .animate-paper-melt,
+  .animate-rebellious-pulse,
+  .animate-swiss-badge,
+  .animate-live-counter,
+  .animate-testimonial-hover,
+  .animate-google-pulse {
+    animation: none !important;
+    transition: none !important;
+  }
+  
+  .magnet-effect:hover {
+    transform: none !important;
+    box-shadow: 8px 8px 0 black !important;
+  }
+}
+
+/* Focus States for Better Accessibility */
+.magnet-effect:focus-visible {
+  outline: 3px solid #00BFA6;
+  outline-offset: 3px;
+}
+
+/* High Contrast Mode Enhancements */
+@media (prefers-contrast: high) {
+  .noise-texture {
+    background-image: 
+      radial-gradient(circle at 1px 1px, rgba(0, 0, 0, 0.5) 1px, transparent 0);
+  }
+  
+  .shadow-brutal,
+  .shadow-brutal-hover,
+  .shadow-brutal-red,
+  .shadow-brutal-green {
+    box-shadow: 4px 4px 0 #000 !important;
+  }
+}
   
   /* Writing mode for vertical text */
   .writing-mode-vertical {

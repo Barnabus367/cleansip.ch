@@ -173,128 +173,122 @@ export default function HeroSection({
         {/* Left Column - Main Content */}
         <div className="relative px-6 lg:px-12 flex flex-col justify-center">
           
-          {/* Trust Badge */}
+          {/* Revolutionary Trust Badge */}
           <div className="mb-6" data-scroll-animate>
-            <div className="inline-flex items-center gap-2 bg-green-50 border-2 border-green-200 px-4 py-2">
-              <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
-              <span className="text-sm font-medium text-green-700">Über 500+ zufriedene Schweizer Kunden</span>
+            <div className="inline-flex items-center gap-2 bg-red-50 border-2 border-red-500 px-4 py-2 animate-pulse">
+              <div className="w-3 h-3 bg-red-500 rounded-full animate-bounce"></div>
+              <span className="text-sm font-bold text-red-700">2'847 Schweizer sind heute auf Plastik umgestellt</span>
             </div>
           </div>
           
-          {/* Main Headline */}
-          <div className="space-y-4" data-scroll-animate>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black leading-tight text-secondary-800" id="hero-heading">
-              Nie mehr <span className="text-primary-600">matschige</span><br />
-              Strohhalme für<br />
-              Ihre <span className="relative">Events
-                <div className="absolute -bottom-2 left-0 w-full h-1 bg-primary-500/30"></div>
-              </span>
+          {/* Rebellious Main Headline */}
+          <div className="space-y-6" data-scroll-animate>
+            <h1 className="text-4xl sm:text-5xl lg:text-7xl font-black leading-tight text-secondary-800" id="hero-heading">
+              <span className="text-red-600 animate-pulse">SCHLUSS MIT</span><br />
+              <span className="text-secondary-800">PAPIER</span><span className="text-primary-600">MATSCH</span>
             </h1>
             
-            <p className="text-lg lg:text-xl text-secondary-600 max-w-lg leading-relaxed">
-              Premium Plastikstrohhalme, die auch nach Stunden in Cocktails und Drinks <strong>perfekt stabil</strong> bleiben. 
-              Trusted by Swiss Gastronomie & Events.
+            <p className="text-xl lg:text-2xl text-secondary-700 max-w-2xl leading-relaxed font-semibold">
+              Endlich wieder Strohhalme, die nicht nach <span className="text-red-600 font-black">30 Sekunden aufweichen</span>. 
+              <br /><span className="text-primary-600">Warum Kompromisse eingehen, wenn es auch stabil geht?</span>
+            </p>
+            
+            <p className="text-lg text-gray-600 max-w-lg italic">
+              "Während andere auf Pappe kauen, geniessen Sie Ihr Getränk wie es sein soll."
             </p>
           </div>
           
-          {/* Value Propositions */}
-          <div className="mt-8 space-y-4" data-scroll-animate>
-            <div className="flex items-center gap-3">
-              <div className="w-6 h-6 bg-primary-500 rounded-full flex items-center justify-center">
-                <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
-                </svg>
-              </div>
-              <span className="text-secondary-700 font-medium">BPA-frei & lebensmittelecht nach EU-Standards</span>
+          {/* Integrated Trust Badges - Rebellious Style */}
+          <div className="mt-8 grid grid-cols-3 gap-4" data-scroll-animate>
+            <div className="text-center bg-secondary-800 text-white p-4 border-2 border-black transform hover:scale-105 transition-transform">
+              <div className="text-2xl font-bold text-primary-500">100%</div>
+              <div className="text-xs uppercase tracking-wider">Formstabil</div>
             </div>
-            
-            <div className="flex items-center gap-3">
-              <div className="w-6 h-6 bg-primary-500 rounded-full flex items-center justify-center">
-                <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                </svg>
-              </div>
-              <span className="text-secondary-700 font-medium">Express-Lieferung in 24-48h schweizweit</span>
+            <div className="text-center bg-primary-600 text-white p-4 border-2 border-black transform hover:scale-105 transition-transform">
+              <div className="text-2xl font-bold">48h</div>
+              <div className="text-xs uppercase tracking-wider">Lieferung</div>
             </div>
-            
-            <div className="flex items-center gap-3">
-              <div className="w-6 h-6 bg-primary-500 rounded-full flex items-center justify-center">
-                <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                </svg>
-              </div>
-              <span className="text-secondary-700 font-medium">Gratis Versand ab CHF 50 - keine versteckten Kosten</span>
+            <div className="text-center bg-accent-500 text-black p-4 border-2 border-black transform hover:scale-105 transition-transform">
+              <div className="text-2xl font-bold">BPA</div>
+              <div className="text-xs uppercase tracking-wider">Frei</div>
             </div>
           </div>
           
-          {/* Product Info Grid */}
-          <div className="mt-8 bg-white border-2 border-black p-6 shadow-brutal" data-scroll-animate>
-            <div className="grid grid-cols-2 gap-6">
-              <div>
-                <div className="text-2xl font-bold text-black">{featuredPrice}</div>
-                <div className="text-sm text-gray-700">pro 100 Stück</div>
-                <div className="text-xs text-gray-600 mt-1">inkl. 7.7% MwSt.</div>
+          {/* Rebellious Value Propositions */}
+          <div className="mt-8 space-y-4" data-scroll-animate>
+            <div className="flex items-center gap-3 bg-red-50 p-3 border-l-4 border-red-500">
+              <div className="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center">
+                <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
               </div>
-              <div>
-                <div className="text-2xl font-bold text-primary-600">48h</div>
-                <div className="text-sm text-gray-700">Lieferzeit</div>
-                <div className="text-xs text-gray-600 mt-1">Express möglich</div>
-              </div>
+              <span className="text-secondary-800 font-bold">Schluss mit matschigen Papier-Fetzen im Drink</span>
             </div>
             
-            <div className="mt-4 pt-4 border-t border-gray-300">
-              <div className="text-xs text-gray-700 uppercase tracking-wider mb-2 font-semibold">Verfügbare Farben:</div>
-              <div className="flex gap-2">
-                <div className="w-4 h-4 rounded-full bg-green-500 border border-black"></div>
-                <div className="w-4 h-4 rounded-full bg-yellow-400 border border-black"></div>
-                <div className="w-4 h-4 rounded-full bg-blue-600 border border-black"></div>
-                <div className="w-4 h-4 rounded-full bg-red-500 border border-black"></div>
-                <div className="w-4 h-4 rounded-full bg-black border border-gray-300"></div>
-                <span className="text-xs text-gray-700 ml-2 font-medium">+weitere</span>
+            <div className="flex items-center gap-3 bg-primary-50 p-3 border-l-4 border-primary-500">
+              <div className="w-8 h-8 bg-primary-500 rounded-full flex items-center justify-center">
+                <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
               </div>
+              <span className="text-secondary-800 font-bold">Stabil wie am ersten Tag - auch nach Stunden</span>
+            </div>
+            
+            <div className="flex items-center gap-3 bg-accent-50 p-3 border-l-4 border-accent-500">
+              <div className="w-8 h-8 bg-accent-500 rounded-full flex items-center justify-center">
+                <svg className="w-5 h-5 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                </svg>
+              </div>
+              <span className="text-secondary-800 font-bold">Express-Lieferung: Morgen bestellt, übermorgen da</span>
             </div>
           </div>
             
-          {/* CTA Buttons */}
-          <div className="mt-8 flex flex-col sm:flex-row gap-4" data-scroll-animate>
+          {/* Revolutionary CTA Buttons with Magnet Effect */}
+          <div className="mt-10 flex flex-col sm:flex-row gap-4" data-scroll-animate>
             <Link 
               href="/search/strohhalme"
-              className="group inline-flex items-center justify-center bg-primary-500 text-white px-8 py-4 font-bold border-2 border-black shadow-brutal hover:shadow-brutal-hover transition-all duration-300 uppercase tracking-wider"
+              className="group relative overflow-hidden bg-gradient-to-r from-red-600 to-red-700 text-white px-10 py-5 font-black text-lg border-2 border-black shadow-brutal hover:shadow-brutal-hover transition-all duration-300 uppercase tracking-wider transform hover:scale-105 magnet-effect"
             >
-              <span>Jetzt bestellen</span>
-              <svg className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-              </svg>
+              <div className="absolute inset-0 bg-gradient-to-r from-red-700 to-red-800 transform translate-x-full group-hover:translate-x-0 transition-transform duration-500"></div>
+              <span className="relative z-10 flex items-center justify-center">
+                JETZT BESTELLEN
+                <svg className="w-6 h-6 ml-3 group-hover:translate-x-2 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                </svg>
+              </span>
             </Link>
             
             <Link 
-              href="/kontakt"
-              className="inline-flex items-center justify-center bg-white text-secondary-700 px-8 py-4 font-bold border-2 border-black hover:bg-gray-50 transition-all duration-300 uppercase tracking-wider"
+              href="#cleansip-unterschied"
+              className="group relative overflow-hidden bg-secondary-800 text-white px-10 py-5 font-black text-lg border-2 border-black hover:bg-secondary-700 transition-all duration-300 uppercase tracking-wider transform hover:scale-105 magnet-effect smooth-scroll"
             >
-              Beratung anfragen
+              <span className="flex items-center justify-center">
+                WARUM CLEANSIP?
+                <svg className="w-6 h-6 ml-3 group-hover:translate-y-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                </svg>
+              </span>
             </Link>
           </div>
           
-          {/* Trust Indicators */}
-          <div className="mt-8 pt-6 border-t border-gray-300" data-scroll-animate>
-            <div className="flex items-center gap-6 text-sm text-gray-700">
-              <div className="flex items-center gap-2">
-                <svg className="w-5 h-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                </svg>
-                <span className="font-medium">SSL-verschlüsselt</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <svg className="w-5 h-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                </svg>
-                <span className="font-medium">14 Tage Rückgabe</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <svg className="w-5 h-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                </svg>
-                <span className="font-medium">CH Qualität</span>
+          {/* Emotional Trust Indicators */}
+          <div className="mt-10 pt-6 border-t border-gray-300" data-scroll-animate>
+            <div className="text-center">
+              <p className="text-lg font-bold text-secondary-800 mb-4">"Schlürfen statt kämpfen" 🥤</p>
+              <div className="flex items-center justify-center gap-8 text-sm text-gray-700">
+                <div className="flex items-center gap-2">
+                  <div className="flex text-accent-500">
+                    {"★".repeat(5)}
+                  </div>
+                  <span className="font-bold">4.8/5 Google Reviews</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <svg className="w-5 h-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                  </svg>
+                  <span className="font-bold">Schweizer Qualität</span>
+                </div>
               </div>
             </div>
           </div>

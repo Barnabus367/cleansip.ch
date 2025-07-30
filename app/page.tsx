@@ -1,6 +1,7 @@
+import CleanSipDifferenceSection from 'components/CleanSipDifferenceSection';
 import HeroSection from 'components/HeroSection';
-import ProblemSolutionSection from 'components/ProblemSolutionSection';
 import ProductsSection from 'components/ProductsSection';
+import RevolutionaryProblemSolutionSection from 'components/RevolutionaryProblemSolutionSection';
 import TestimonialsSection from 'components/TestimonialsSection';
 import TrustSection from 'components/TrustSection';
 import UseCasesSection from 'components/UseCasesSection';
@@ -9,15 +10,16 @@ import { getFallbackProducts, processShopifyProducts } from 'lib/product-utils';
 import { getProducts } from 'lib/shopify';
 import type { Metadata } from 'next';
 
-// SEO and Performance metadata
+// Revolutionary SEO for rebellious positioning
 export const metadata: Metadata = {
-  title: 'CleanSip | Nie mehr matschige Alternativen zu Plastikstrohhalmen',
-  description: 'Premium Plastikstrohhalme für Gastronomie und Events. BPA-frei, lebensmittelecht. Schnelle Lieferung in der ganzen Schweiz. Jetzt bestellen!',
+  title: 'CleanSip | SCHLUSS MIT PAPIERMATSCH - Nie wieder matschige Strohhalme!',
+  description: 'Endlich wieder Strohhalme, die nicht nach 30 Sekunden aufweichen! Premium Plastikstrohhalme für alle, die keine Kompromisse eingehen. Warum Pappe kauen, wenn es auch stabil geht?',
   openGraph: {
-    title: 'CleanSip | Nie mehr matschige Alternativen',
-    description: 'Premium Plastikstrohhalme für Gastronomie und Events',
-    images: [{ url: '/og-homepage.jpg', width: 1200, height: 630 }]
-  }
+    title: 'SCHLUSS MIT PAPIERMATSCH | CleanSip Revolution',
+    description: 'Über 2.800 Schweizer haben bereits gewechselt. Schlürfen statt kämpfen!',
+    images: [{ url: '/og-revolution.jpg', width: 1200, height: 630 }]
+  },
+  keywords: 'Plastikstrohhalme, stabile Strohhalme, Papierstrohhalm Alternative, CleanSip, Schweiz, BPA-frei, matschige Strohhalme'
 };
 
 export default async function HomePage() {
@@ -51,25 +53,28 @@ export default async function HomePage() {
       </a>
       
       <main id="main-content">
-        {/* Hero Section - Awwwards-worthy 3D experience */}
+        {/* Revolutionary Hero Section - Rebellious storytelling */}
         <HeroSection 
           featuredPrice={featuredPrice} 
           featuredImage={featuredImage}
         />
         
-        {/* Trust & Benefits Section - Professional trust indicators */}
+        {/* NEW: CleanSip Difference Section - Emotional positioning */}
+        <CleanSipDifferenceSection />
+        
+        {/* Revolutionary Problem/Solution Section - Split-screen drama */}
+        <RevolutionaryProblemSolutionSection />
+        
+        {/* Trust & Benefits Section - Enhanced with Swiss quality */}
         <TrustSection />
         
-        {/* Problem/Solution Section - Clear value proposition */}
-        <ProblemSolutionSection />
-        
-        {/* Products Section - Enhanced with stock indicators */}
+        {/* Products Section - Enhanced with emotional appeals */}
         <ProductsSection featuredProducts={processedProducts} />
         
         {/* Use Cases Section - Professional applications */}
         <UseCasesSection />
         
-        {/* Testimonials Section - Customer social proof */}
+        {/* Testimonials Section - Emotional customer stories */}
         <TestimonialsSection />
       </main>
     </>
