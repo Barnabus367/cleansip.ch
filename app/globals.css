@@ -382,3 +382,55 @@ button {
 .brutal-product-container .shadow-\[10px_10px_0px_black\]:hover {
   box-shadow: 15px 15px 0px #00BFA6 !important;
 }
+
+/* Global Brutalist Design Rules */
+* {
+  border-radius: 0 !important;
+}
+
+/* Remove all rounded classes */
+.rounded,
+.rounded-sm,
+.rounded-md,
+.rounded-lg,
+.rounded-xl,
+.rounded-2xl,
+.rounded-3xl,
+.rounded-full {
+  border-radius: 0 !important;
+}
+
+/* Hard shadows only */
+.shadow,
+.shadow-sm,
+.shadow-md,
+.shadow-lg,
+.shadow-xl,
+.shadow-2xl {
+  box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Button styles - no rounded corners */
+button,
+.btn,
+[type="button"],
+[type="submit"] {
+  border-radius: 0 !important;
+  transition: none !important;
+}
+
+/* Input styles - no rounded corners */
+input,
+textarea,
+select {
+  border-radius: 0 !important;
+  border: 2px solid #000 !important;
+}
+
+/* Cards and containers - hard edges */
+.card,
+.container,
+.panel {
+  border-radius: 0 !important;
+  box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.1) !important;
+}

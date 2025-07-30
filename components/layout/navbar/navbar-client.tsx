@@ -3,7 +3,7 @@
 import { Menu } from 'lib/shopify/types';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Suspense, useEffect, useState } from 'react';
+import { Suspense, useState } from 'react';
 import CartIcon from './cart-icon';
 import MobileMenu from './mobile-menu';
 import ModernSearch, { SearchSkeleton } from './search';
@@ -13,25 +13,11 @@ interface NavbarClientProps {
 }
 
 export function NavbarClient({ menu }: NavbarClientProps) {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [logoHovered, setLogoHovered] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
   const pathname = usePathname();
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-      isScrolled 
-        ? 'bg-white/95 backdrop-blur-lg border-b border-gray-200 shadow-lg' 
-        : 'bg-transparent'
-    }`}>
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-white h-20 border-b-2 border-black">
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex items-center justify-between h-20">
           {/* Mobile menu */}
@@ -41,86 +27,34 @@ export function NavbarClient({ menu }: NavbarClientProps) {
             </Suspense>
           </div>
           
-          {/* Logo with Animation */}
+          {/* Logo - Pure Typography */}
           <div className="flex items-center">
-            <Link 
-              href="/" 
-              className="flex items-center group"
-              onMouseEnter={() => setLogoHovered(true)}
-              onMouseLeave={() => setLogoHovered(false)}
-            >
-              <div className="relative">
-                <svg
-                  width="40"
-                  height="40"
-                  viewBox="0 0 40 40"
-                  className={`transition-transform duration-300 ${logoHovered ? 'scale-110 rotate-12' : ''}`}
-                >
-                  <circle cx="20" cy="20" r="18" fill="url(#logoGradient)" />
-                  <path d="M15 12h10v16h-10z" fill="white" opacity="0.9" />
-                  <circle cx="20" cy="16" r="2" fill="#00BFA6" />
-                  <defs>
-                    <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" stopColor="#00BFA6" />
-                      <stop offset="100%" stopColor="#003B46" />
-                    </linearGradient>
-                  </defs>
-                </svg>
-              </div>
-              <div className="ml-3 hidden lg:block">
-                <span className={`text-2xl font-bold transition-colors duration-300 ${
-                  isScrolled ? 'text-secondary' : 'text-white'
-                }`}>
-                  CleanSip
-                </span>
-              </div>
+            <Link href="/" className="flex items-center">
+              <span className="text-xl font-black uppercase tracking-[0.5em] text-black">
+                CLEANSIP
+              </span>
             </Link>
           </div>
 
-          {/* Navigation with Mega Menu Preparation */}
-          <div className="hidden md:flex items-center space-x-8">
+          {/* Navigation - Horizontal with separators */}
+          <div className="hidden md:flex items-center">
             {menu.length ? (
-              <ul className="flex items-center space-x-8">
-                {menu.map((item) => {
+              <ul className="flex items-center">
+                {menu.map((item, index) => {
                   const isActive = pathname === item.path;
                   return (
-                    <li key={item.title} className="relative group">
+                    <li key={item.title} className="flex items-center">
                       <Link
                         href={item.path}
                         prefetch={true}
-                        className={`relative font-medium transition-all duration-300 hover:text-primary ${
-                          isScrolled 
-                            ? isActive ? 'text-primary' : 'text-secondary' 
-                            : isActive ? 'text-primary' : 'text-white hover:text-primary'
+                        className={`font-mono text-sm uppercase tracking-wider transition-all duration-300 ${
+                          isActive ? 'font-black text-black' : 'font-normal text-black hover:font-black'
                         }`}
                       >
                         {item.title}
-                        {/* Underline Animation */}
-                        <span className={`absolute -bottom-1 left-0 h-0.5 bg-primary transition-all duration-300 ${
-                          isActive ? 'w-full' : 'w-0 group-hover:w-full'
-                        }`} />
                       </Link>
-                      
-                      {/* Mega Menu Placeholder */}
-                      {item.title === 'Strohhalme' && (
-                        <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
-                          <div className="bg-white rounded-2xl shadow-2xl border border-gray-100 p-6 w-80">
-                            <div className="space-y-3">
-                              <h3 className="font-semibold text-secondary">Kategorien</h3>
-                              <div className="space-y-2">
-                                <Link href="/search/strohhalme" className="block text-sm text-gray-600 hover:text-primary transition-colors">
-                                  Alle Strohhalme
-                                </Link>
-                                <Link href="/search/premium" className="block text-sm text-gray-600 hover:text-primary transition-colors">
-                                  Premium Collection
-                                </Link>
-                                <Link href="/search/party" className="block text-sm text-gray-600 hover:text-primary transition-colors">
-                                  Party Sets
-                                </Link>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
+                      {index < menu.length - 1 && (
+                        <span className="mx-4 text-black font-mono">|</span>
                       )}
                     </li>
                   );
@@ -129,16 +63,40 @@ export function NavbarClient({ menu }: NavbarClientProps) {
             ) : null}
           </div>
 
-          {/* Search & Cart */}
-          <div className="flex items-center space-x-4">
-            <div className="hidden md:block">
-              <Suspense fallback={<SearchSkeleton />}>
-                <ModernSearch isScrolled={isScrolled} />
-              </Suspense>
-            </div>
-            <CartIcon isScrolled={isScrolled} />
+          {/* Right Side - Search and Cart */}
+          <div className="flex items-center space-x-6">
+            {/* Search - Text only */}
+            <button
+              onClick={() => setSearchOpen(!searchOpen)}
+              className="font-mono text-sm uppercase tracking-wider text-black hover:font-black transition-all duration-300"
+            >
+              SEARCH
+            </button>
+
+            {/* Cart Icon */}
+            <Suspense fallback={null}>
+              <CartIcon />
+            </Suspense>
           </div>
         </div>
+
+        {/* Search Overlay */}
+        {searchOpen && (
+          <div className="absolute top-20 left-0 right-0 bg-white border-b-2 border-black p-6">
+            <Suspense fallback={<SearchSkeleton />}>
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="font-mono text-sm uppercase tracking-wider font-black">SEARCH</h3>
+                <button
+                  onClick={() => setSearchOpen(false)}
+                  className="font-mono text-xs uppercase tracking-wider hover:font-black"
+                >
+                  CLOSE
+                </button>
+              </div>
+              <ModernSearch isScrolled={false} />
+            </Suspense>
+          </div>
+        )}
       </div>
     </nav>
   );

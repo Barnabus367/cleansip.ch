@@ -1,10 +1,8 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
-import { PremiumProductGallery } from 'components/product/premium-gallery';
 import { PremiumProductInfo } from 'components/product/premium-product-info';
 import { ProductProvider } from 'components/product/product-context';
-import { RelatedProductsCarousel } from 'components/product/related-products-carousel';
 import { HIDDEN_PRODUCT_TAG } from 'lib/constants';
 import { getProduct, getProductRecommendations } from 'lib/shopify';
 import { Suspense } from 'react';
@@ -81,73 +79,73 @@ export default async function ProductPage(props: { params: Promise<{ handle: str
         }}
       />
       
-      {/* Premium Product Layout */}
-      <div className="min-h-screen bg-gradient-to-br from-white via-gray-50/50 to-primary-50/30">
-        {/* Main Product Section */}
-        <div className="container mx-auto px-4 py-8 lg:py-16">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 max-w-7xl mx-auto">
-            
-            {/* Product Gallery - Left Side */}
-            <div className="relative">
-              <Suspense
-                fallback={
-                  <div className="aspect-square bg-gray-100 rounded-3xl animate-pulse" />
-                }
-              >
-                <PremiumProductGallery
-                  images={product.images.map((image) => ({
-                    src: image.url,
-                    altText: image.altText
-                  }))}
+      {/* Brutalist Product Layout */}
+      <div className="min-h-screen bg-white">
+        {/* Main Product Section - 60/40 Split */}
+        <div className="grid grid-cols-1 lg:grid-cols-5 min-h-screen">
+          
+          {/* Product Gallery - Left Side (60%) */}
+          <div className="lg:col-span-3 relative bg-white">
+            <Suspense
+              fallback={
+                <div className="w-full h-screen bg-black" />
+              }
+            >
+              <div className="w-full h-screen relative overflow-hidden">
+                <div 
+                  className="w-full h-full bg-cover bg-center"
+                  style={{
+                    backgroundImage: `url(${product.images[0]?.url || ''})`,
+                    clipPath: 'polygon(0 0, 85% 0, 100% 100%, 0% 100%)'
+                  }}
                 />
-              </Suspense>
-            </div>
-
-            {/* Product Info - Right Side (Sticky) */}
-            <div className="lg:sticky lg:top-8 lg:self-start">
-              <Suspense fallback={
-                <div className="space-y-4">
-                  <div className="h-8 bg-gray-200 rounded animate-pulse"></div>
-                  <div className="h-6 bg-gray-200 rounded animate-pulse"></div>
-                  <div className="h-12 bg-gray-200 rounded animate-pulse"></div>
-                </div>
-              }>
-                <PremiumProductInfo product={product} />
-              </Suspense>
-            </div>
-          </div>
-        </div>
-
-        {/* Related Products Section */}
-        <div className="bg-white border-t border-gray-100">
-          <div className="container mx-auto px-4 py-16">
-            <Suspense fallback={
-              <div className="space-y-8">
-                <div className="h-8 bg-gray-200 rounded w-64 animate-pulse"></div>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-                  {[1, 2, 3, 4].map((i) => (
-                    <div key={i} className="aspect-square bg-gray-100 rounded-2xl animate-pulse" />
-                  ))}
+                
+                {/* Price Watermark */}
+                <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                  <div className="text-[15vw] font-black text-black opacity-5 select-none">
+                    CHF {product.priceRange.minVariantPrice.amount}
+                  </div>
                 </div>
               </div>
-            }>
-              <RelatedProductsCarousel products={relatedProducts} />
             </Suspense>
           </div>
-        </div>
 
-        {/* Mobile Sticky Add to Cart Bar */}
-        <div className="lg:hidden fixed bottom-0 left-0 right-0 z-50 border-t border-gray-200 p-4 shadow-2xl backdrop-blur-sm bg-white/95">
-          <div className="flex items-center justify-between gap-4">
-            <div className="flex flex-col">
-              <span className="text-sm text-gray-600">Preis</span>
-              <span className="text-lg font-bold text-secondary">
-                CHF {product.priceRange.minVariantPrice.amount}
-              </span>
-            </div>
-            <button className="flex-1 bg-primary text-white py-3 px-6 rounded-xl font-semibold hover:bg-primary-600 transition-colors">
-              In den Warenkorb
-            </button>
+          {/* Product Info - Right Side (40%) */}
+          <div className="lg:col-span-2 p-8 lg:p-16 flex flex-col justify-center bg-white">
+            <Suspense fallback={
+              <div className="space-y-8">
+                <div className="h-16 bg-black"></div>
+                <div className="h-4 bg-black"></div>
+                <div className="h-12 bg-black"></div>
+              </div>
+            }>
+              {/* Product Title */}
+              <h1 className="text-5xl lg:text-6xl font-black uppercase tracking-tight text-black mb-8 leading-none">
+                {product.title}
+              </h1>
+              
+              {/* Description */}
+              <div className="mb-12">
+                <p className="font-mono text-xs lg:text-sm text-black max-w-xs leading-relaxed">
+                  {product.description}
+                </p>
+              </div>
+              
+              {/* Variant Selector */}
+              <div className="mb-12">
+                <PremiumProductInfo product={product} />
+              </div>
+              
+              {/* Add to Cart Button */}
+              <button className="w-full bg-black text-white py-6 font-mono text-sm uppercase tracking-wider hover:bg-gray-900 transition-colors">
+                IN DEN WARENKORB
+              </button>
+            </Suspense>
+          </div>
+          
+          {/* Vertical Shipping Info */}
+          <div className="fixed right-8 top-1/2 -translate-y-1/2 writing-vertical-rl text-black font-mono text-xs uppercase tracking-wider opacity-40">
+            Kostenloser Versand • 48h Lieferung
           </div>
         </div>
       </div>

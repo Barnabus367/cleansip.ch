@@ -1,7 +1,7 @@
 'use client';
 
 import { Dialog, DialogBackdrop, DialogPanel } from '@headlessui/react';
-import { Bars3Icon, HeartIcon, MagnifyingGlassIcon, ShoppingBagIcon, UserIcon, XMarkIcon } from '@heroicons/react/24/outline';
+import { HeartIcon, MagnifyingGlassIcon, ShoppingBagIcon, UserIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import { Menu } from 'lib/shopify/types';
 import Form from 'next/form';
 import Link from 'next/link';
@@ -43,9 +43,9 @@ export default function MobileMenu({ menu }: { menu: Menu[] }) {
       <button
         onClick={openMobileMenu}
         aria-label="Open mobile menu"
-        className="flex h-11 w-11 items-center justify-center rounded-full border border-white/20 text-white transition-colors hover:border-white/40 hover:bg-white/10 md:hidden"
+        className="font-mono text-sm uppercase tracking-wider text-black hover:font-black transition-all duration-300 md:hidden"
       >
-        <Bars3Icon className="h-5 w-5" />
+        MENU
       </button>
 
       {/* Full Screen Overlay */}
