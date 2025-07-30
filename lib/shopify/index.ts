@@ -51,11 +51,19 @@ export {
     updateCart
 } from './cart-server';
 
+// Validate required Shopify environment variables
+if (!process.env.SHOPIFY_STORE_DOMAIN) {
+  console.error('❌ SHOPIFY_STORE_DOMAIN environment variable is missing');
+}
+if (!process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN) {
+  console.error('❌ SHOPIFY_STOREFRONT_ACCESS_TOKEN environment variable is missing');
+}
+
 const domain = process.env.SHOPIFY_STORE_DOMAIN
   ? ensureStartsWith(process.env.SHOPIFY_STORE_DOMAIN, 'https://')
   : '';
 const endpoint = `${domain}${SHOPIFY_GRAPHQL_API_ENDPOINT}`;
-const key = process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN!;
+const key = process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN || '';
 
 type ExtractVariables<T> = T extends { variables: object }
   ? T['variables']
@@ -70,6 +78,25 @@ export async function shopifyFetch<T>({
   query: string;
   variables?: ExtractVariables<T>;
 }): Promise<{ status: number; body: T } | never> {
+  // Validate Shopify configuration before making requests
+  if (!domain) {
+    throw {
+      cause: 'Configuration Error',
+      status: 500,
+      message: 'SHOPIFY_STORE_DOMAIN environment variable is not set',
+      query
+    };
+  }
+  
+  if (!key) {
+    throw {
+      cause: 'Configuration Error', 
+      status: 500,
+      message: 'SHOPIFY_STOREFRONT_ACCESS_TOKEN environment variable is not set',
+      query
+    };
+  }
+
   try {
     const result = await fetch(endpoint, {
       method: 'POST',
