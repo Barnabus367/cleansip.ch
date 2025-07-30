@@ -1,5 +1,9 @@
 import HeroSection from 'components/HeroSection';
+import ProblemSolutionSection from 'components/ProblemSolutionSection';
 import ProductsSection from 'components/ProductsSection';
+import TestimonialsSection from 'components/TestimonialsSection';
+import TrustSection from 'components/TrustSection';
+import UseCasesSection from 'components/UseCasesSection';
 import { FEATURE_FLAGS } from 'lib/constants';
 import { getFallbackProducts, processShopifyProducts } from 'lib/product-utils';
 import { getProducts } from 'lib/shopify';
@@ -28,12 +32,16 @@ export default async function HomePage() {
   });
 
   // Process Shopify products or use fallback - Backend-Konsistenz
+  // Since we have only 1 product type (Strohhalme), create 3 color variations
   const processedProducts = featuredProducts.length > 0 
-    ? processShopifyProducts(featuredProducts, 3)
+    ? processShopifyProducts(featuredProducts, 3) // Create 3 variations from 1 product
     : getFallbackProducts();
 
-  // Extract featured price for Hero
-  const featuredPrice = processedProducts[0]?.price || 'CHF 14.90';
+  // Extract featured price for Hero (use first product)
+  const featuredPrice = processedProducts[0]?.price || 'CHF 9.90';
+  
+  // Extract featured image for Hero (use first product's image if available)
+  const featuredImage = processedProducts[0]?.featuredImage;
 
   return (
     <>
@@ -43,11 +51,26 @@ export default async function HomePage() {
       </a>
       
       <main id="main-content">
-        {/* Hero Section - Modularisiert mit klaren Tailwind-Klassen */}
-        <HeroSection featuredPrice={featuredPrice} />
+        {/* Hero Section - Awwwards-worthy 3D experience */}
+        <HeroSection 
+          featuredPrice={featuredPrice} 
+          featuredImage={featuredImage}
+        />
         
-        {/* Products Section - Map über featuredProducts für Backend-Konsistenz */}
+        {/* Trust & Benefits Section - Professional trust indicators */}
+        <TrustSection />
+        
+        {/* Problem/Solution Section - Clear value proposition */}
+        <ProblemSolutionSection />
+        
+        {/* Products Section - Enhanced with stock indicators */}
         <ProductsSection featuredProducts={processedProducts} />
+        
+        {/* Use Cases Section - Professional applications */}
+        <UseCasesSection />
+        
+        {/* Testimonials Section - Customer social proof */}
+        <TestimonialsSection />
       </main>
     </>
   );

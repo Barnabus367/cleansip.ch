@@ -8,6 +8,10 @@ interface Product {
   price: string;
   accentColor: string;
   handle: string;
+  featuredImage?: {
+    url: string;
+    altText: string;
+  };
 }
 
 interface ProductsSectionProps {
@@ -22,13 +26,13 @@ export default function ProductsSection({ featuredProducts }: ProductsSectionPro
       <div className="max-w-[1600px] mx-auto px-6 lg:px-12 pt-16 lg:pt-24">
         <div className="mb-12 lg:mb-16">
           <h2 
-            className="text-4xl lg:text-5xl font-bold text-secondary-500 mb-4"
+            className="text-4xl lg:text-5xl font-bold text-black mb-4"
             role="heading"
             aria-level={2}
           >
             Unsere Produkte
           </h2>
-          <p className="text-lg text-secondary-500/60 max-w-2xl">
+          <p className="text-lg text-gray-700 max-w-2xl">
             Premium-Strohhalme für professionelle Anwendungen
           </p>
         </div>
@@ -46,6 +50,7 @@ export default function ProductsSection({ featuredProducts }: ProductsSectionPro
                 price={product.price}
                 accentColor={product.accentColor}
                 href={`/product/${product.handle}`}
+                featuredImage={product.featuredImage}
               />
             </div>
           ))}
@@ -64,6 +69,7 @@ export default function ProductsSection({ featuredProducts }: ProductsSectionPro
               price={product.price}
               accentColor={product.accentColor}
               href={`/product/${product.handle}`}
+              featuredImage={product.featuredImage}
             />
           ))}
         </div>

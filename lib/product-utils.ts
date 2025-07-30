@@ -25,18 +25,43 @@ export function processShopifyProducts(
   maxProducts: number = 3
 ): ProcessedProduct[] {
   const accentColors = ['#00BFA6', '#FFD54F', '#003B46', '#E91E63', '#9C27B0'];
-  const defaultSubtitles = [
+  const colorVariations = [
     'Standard Serie',
-    'Event Serie', 
-    'Exklusive Serie',
-    'Premium Serie',
-    'Deluxe Serie'
+    'Premium Serie', 
+    'Deluxe Serie',
+    'Professional Serie',
+    'Event Serie'
   ];
 
+  // If we have at least one product, create variations from the first one
+  if (products.length > 0) {
+    const baseProduct = products[0]!;
+    const variations: ProcessedProduct[] = [];
+    
+    for (let i = 0; i < maxProducts; i++) {
+      const colorVariant = i > 0 ? ` - ${colorVariations[i]}` : '';
+      
+      variations.push({
+        id: baseProduct.id + (i > 0 ? `-variant-${i}` : ''),
+        title: baseProduct.title + colorVariant,
+        subtitle: colorVariations[i] || 'Standard Serie',
+        description: truncateDescription(baseProduct.description, 120),
+        price: formatPrice(baseProduct.priceRange.minVariantPrice.amount, baseProduct.priceRange.minVariantPrice.currencyCode),
+        handle: baseProduct.handle,
+        accentColor: accentColors[i % accentColors.length] || '#00BFA6',
+        availableForSale: baseProduct.availableForSale,
+        featuredImage: baseProduct.featuredImage
+      });
+    }
+    
+    return variations;
+  }
+  
+  // Fallback if no products available
   return products.slice(0, maxProducts).map((product, index) => ({
     id: product.id,
     title: product.title,
-    subtitle: getProductSubtitle(product, defaultSubtitles[index] || 'Premium Serie'),
+    subtitle: getProductSubtitle(product, colorVariations[index] || 'Standard Serie'),
     description: truncateDescription(product.description, 120),
     price: formatPrice(product.priceRange.minVariantPrice.amount, product.priceRange.minVariantPrice.currencyCode),
     handle: product.handle,
@@ -86,33 +111,45 @@ export function getFallbackProducts(): ProcessedProduct[] {
   return [
     {
       id: 'fallback-1',
-      title: 'Strohhalme Classic',
+      title: 'Plastik-Strohhalme',
       subtitle: 'Standard Serie',
       description: 'Premium Plastikstrohhalme für jede Gelegenheit. BPA-frei und lebensmittelecht.',
-      price: 'CHF 14.90',
-      handle: 'strohhalme-classic',
+      price: 'CHF 9.90',
+      handle: 'plastik-strohhalm',
       accentColor: '#00BFA6',
-      availableForSale: true
+      availableForSale: true,
+      featuredImage: {
+        url: '/placeholder-straw.jpg',
+        altText: 'CleanSip Plastik-Strohhalme Standard Serie'
+      }
     },
     {
       id: 'fallback-2',
-      title: 'Premium Set',
-      subtitle: 'Event Serie',
-      description: 'Hochwertige Qualität für professionelle Events und Gastronomie.',
-      price: 'CHF 19.90',
-      handle: 'premium-set',
+      title: 'Plastik-Strohhalme - Premium Serie',
+      subtitle: 'Premium Serie',
+      description: 'Hochwertige Plastikstrohhalme für professionelle Anwendungen in der Gastronomie.',
+      price: 'CHF 12.90',
+      handle: 'plastik-strohhalm',
       accentColor: '#FFD54F',
-      availableForSale: true
+      availableForSale: true,
+      featuredImage: {
+        url: '/placeholder-straw.jpg',
+        altText: 'CleanSip Plastik-Strohhalme Premium Serie'
+      }
     },
     {
       id: 'fallback-3',
-      title: 'Deluxe Pack',
-      subtitle: 'Exklusive Serie',
-      description: 'Unsere exklusivste Serie für höchste Ansprüche und Premium-Events.',
-      price: 'CHF 24.90',
-      handle: 'deluxe-pack',
+      title: 'Plastik-Strohhalme - Deluxe Serie',
+      subtitle: 'Deluxe Serie',
+      description: 'Exklusive Plastikstrohhalme für besondere Events und gehobene Gastronomiebetriebe.',
+      price: 'CHF 15.90',
+      handle: 'plastik-strohhalm',
       accentColor: '#003B46',
-      availableForSale: true
+      availableForSale: true,
+      featuredImage: {
+        url: '/placeholder-straw.jpg',
+        altText: 'CleanSip Plastik-Strohhalme Deluxe Serie'
+      }
     }
   ];
 }

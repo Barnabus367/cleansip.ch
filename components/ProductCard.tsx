@@ -1,6 +1,8 @@
 'use client'
 
 import Link from 'next/link'
+import { formatSwissPrice } from '../lib/shopify/validate-config'
+import { CompactStockIndicator } from './product/stock-indicator'
 
 interface ProductCardProps {
   title: string
@@ -9,6 +11,13 @@ interface ProductCardProps {
   price: string
   accentColor: string
   href?: string
+  stockLevel?: number
+  reservedStock?: number
+  currencyCode?: string
+  featuredImage?: {
+    url: string
+    altText: string
+  }
 }
 
 export default function ProductCard({
@@ -17,8 +26,16 @@ export default function ProductCard({
   info,
   price,
   accentColor,
-  href = "#"
+  href = "#",
+  stockLevel = 100,
+  reservedStock = 0,
+  currencyCode = 'CHF',
+  featuredImage
 }: ProductCardProps) {
+  // Format price for Swiss market
+  const formattedPrice = currencyCode === 'CHF' 
+    ? formatSwissPrice(price, currencyCode)
+    : price;
   const CardContent = () => (
     <div className="group relative bg-white shadow-brutal hover:shadow-brutal-hover transform-hover-rotate overflow-hidden h-full">
       {/* Accent Strip with group-hover effect */}
@@ -29,49 +46,84 @@ export default function ProductCard({
       />
       
       {/* Pseudo-element shadow via after pseudo-class utility */}
-      <div className="relative z-10 p-6 lg:p-8 h-full flex flex-col">
+      <div className="relative z-10 h-full flex flex-col">
         
-        {/* Product Title & Subtitle */}
-        <div className="mb-4">
-          <h3 
-            id={`product-${title.replace(/\s+/g, '-').toLowerCase()}`}
-            className="text-lg lg:text-xl font-bold text-secondary-500 leading-tight mb-1 group-hover:text-primary-500 transition-colors duration-300"
-          >
-            {title}
-          </h3>
-          <p className="text-sm text-secondary-500/60 font-medium">
-            {subtitle}
-          </p>
-        </div>
+        {/* Product Image Section */}
+        {featuredImage && (
+          <div className="relative mb-4 bg-gray-50 rounded-md overflow-hidden group-hover:scale-105 transition-transform duration-300">
+            <div className="aspect-square relative">
+              <img
+                src={featuredImage.url}
+                alt={featuredImage.altText || title}
+                className="w-full h-full object-cover"
+                loading="lazy"
+              />
+              {/* Color overlay for branding */}
+              <div 
+                className="absolute inset-0 opacity-10 group-hover:opacity-20 transition-opacity duration-300"
+                style={{ backgroundColor: accentColor }}
+                aria-hidden="true"
+              />
+            </div>
+          </div>
+        )}
         
-        {/* Product Info */}
-        <div className="mb-6 flex-grow">
-          <p className="text-xs text-secondary-500/80 leading-relaxed line-clamp-3">
-            {info}
-          </p>
-        </div>
+        {/* Product Content */}
+        <div className="flex-1 flex flex-col p-6 lg:p-8">
         
-        {/* Price & CTA */}
-        <div className="flex items-center justify-between mt-auto">
-          <div className="price">
-            <span 
-              className="text-xl font-bold text-secondary-500 group-hover:text-primary-500 transition-colors duration-300"
-              aria-label={`Preis: ${price}`}
+          {/* Product Title & Subtitle */}
+          <div className="mb-4">
+            <h3 
+              id={`product-${title.replace(/\s+/g, '-').toLowerCase()}`}
+              className="text-lg lg:text-xl font-bold text-secondary-500 leading-tight mb-1 group-hover:text-primary-500 transition-colors duration-300"
             >
-              {price}
-            </span>
+              {title}
+            </h3>
+            <p className="text-sm text-secondary-500/60 font-medium">
+              {subtitle}
+            </p>
+          </div>
+        
+          {/* Product Info */}
+          <div className="mb-6 flex-grow">
+            <p className="text-xs text-secondary-500/80 leading-relaxed line-clamp-3">
+              {info}
+            </p>
           </div>
           
-          <button 
-            className="px-4 py-2 text-xs tracking-[0.1em] uppercase font-medium transition-all duration-300 shadow-brutal hover:shadow-brutal-hover focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2"
-            style={{ 
-              backgroundColor: accentColor,
-              color: accentColor === '#FFD54F' ? '#003B46' : 'white'
-            }}
-            aria-label={`${title} bestellen für ${price}`}
-          >
-            Bestellen
-          </button>
+          {/* Stock Indicator */}
+          <div className="mb-4">
+            <CompactStockIndicator 
+              stockLevel={stockLevel}
+              reservedStock={reservedStock}
+              className="text-xs"
+            />
+          </div>
+          
+          {/* Price & CTA */}
+          <div className="flex items-center justify-between mt-auto">
+            <div className="price">
+              <span 
+                className="text-xl font-bold text-secondary-500 group-hover:text-primary-500 transition-colors duration-300"
+                aria-label={`Preis: ${formattedPrice}`}
+              >
+                {formattedPrice}
+              </span>
+            </div>
+            
+            <button 
+              className="px-4 py-2 text-xs tracking-[0.1em] uppercase font-medium transition-all duration-300 shadow-brutal hover:shadow-brutal-hover focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
+              style={{ 
+                backgroundColor: accentColor,
+                color: accentColor === '#FFD54F' ? '#003B46' : 'white'
+              }}
+              aria-label={`${title} bestellen für ${formattedPrice}`}
+              disabled={stockLevel - reservedStock <= 0}
+            >
+              {stockLevel - reservedStock <= 0 ? 'Ausverkauft' : 'Bestellen'}
+            </button>
+          </div>
+          
         </div>
         
       </div>

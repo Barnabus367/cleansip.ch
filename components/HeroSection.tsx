@@ -6,7 +6,6 @@ import Link from 'next/link';
 import { Suspense, useCallback, useEffect, useRef, useState } from 'react';
 import { useMousePosition, useTouchPosition } from '../hooks/useMousePosition';
 import { useConfetti, useParticleSystem } from '../hooks/useParticleSystem';
-import { GlitchTypography, LiquidTypography } from './typography/LiquidTypography';
 
 // Dynamic import for Three.js component to reduce initial bundle
 const StrawModel = dynamic(() => import('./three/StrawModel'), {
@@ -24,9 +23,16 @@ const StrawModel = dynamic(() => import('./three/StrawModel'), {
 
 interface HeroSectionProps {
   featuredPrice?: string;
+  featuredImage?: {
+    url: string;
+    altText: string;
+  };
 }
 
-export default function HeroSection({ featuredPrice = 'CHF 14.90' }: HeroSectionProps) {
+export default function HeroSection({ 
+  featuredPrice = 'CHF 9.90', 
+  featuredImage 
+}: HeroSectionProps) {
   // State management
   const [isLoaded, setIsLoaded] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
@@ -161,153 +167,249 @@ export default function HeroSection({ featuredPrice = 'CHF 14.90' }: HeroSection
       {/* Background Gradient Animation */}
       <div className="absolute inset-0 bg-gradient-to-br from-primary-500/5 via-transparent to-accent-500/5 animate-gradient"></div>
 
-      {/* Two-Column Grid Layout */}
+      {/* Hero Content Grid */}
       <div className="grid lg:grid-cols-2 min-h-screen max-w-[1600px] mx-auto relative z-10">
       
-        {/* Left Column - Typography Focus */}
+        {/* Left Column - Main Content */}
         <div className="relative px-6 lg:px-12 flex flex-col justify-center">
           
-          {/* Small Intro - Swiss Typography Style */}
-          <div className="absolute top-16 lg:top-24 left-6 lg:left-12" data-scroll-animate>
-            <p className="text-xs tracking-[0.3em] text-secondary-500 font-light uppercase">
-              Nie mehr
+          {/* Trust Badge */}
+          <div className="mb-6" data-scroll-animate>
+            <div className="inline-flex items-center gap-2 bg-green-50 border-2 border-green-200 px-4 py-2">
+              <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+              <span className="text-sm font-medium text-green-700">Über 500+ zufriedene Schweizer Kunden</span>
+            </div>
+          </div>
+          
+          {/* Main Headline */}
+          <div className="space-y-4" data-scroll-animate>
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black leading-tight text-secondary-800" id="hero-heading">
+              Nie mehr <span className="text-primary-600">matschige</span><br />
+              Strohhalme für<br />
+              Ihre <span className="relative">Events
+                <div className="absolute -bottom-2 left-0 w-full h-1 bg-primary-500/30"></div>
+              </span>
+            </h1>
+            
+            <p className="text-lg lg:text-xl text-secondary-600 max-w-lg leading-relaxed">
+              Premium Plastikstrohhalme, die auch nach Stunden in Cocktails und Drinks <strong>perfekt stabil</strong> bleiben. 
+              Trusted by Swiss Gastronomie & Events.
             </p>
           </div>
           
-          {/* Main Typography Composition */}
-          <div className="relative space-y-2 lg:space-y-4">
-            
-            {/* Hidden H1 for SEO */}
-            <h1 className="sr-only" id="hero-heading">
-              CleanSip - Nie mehr matschige Alternativen zu Plastikstrohhalmen
-            </h1>
-            
-            {/* Liquid Typography - "MATSCHIGE" */}
-            <div data-scroll-animate>
-              <LiquidTypography
-                text="MATSCHIGE"
-                className="text-5xl sm:text-6xl lg:text-8xl font-black leading-none text-secondary-800"
-                isHovered={isHovered}
-                animationTrigger={isLoaded}
-              />
-            </div>
-            
-            {/* Glitch Typography - "ALTERNATIVEN" */}
-            <div 
-              data-scroll-animate
-              onMouseEnter={() => setIsHovered(true)}
-              onMouseLeave={() => setIsHovered(false)}
-            >
-              <GlitchTypography
-                text="ALTERNATIVEN"
-                className="text-5xl sm:text-6xl lg:text-8xl font-black leading-none text-primary-600"
-                isActive={isHovered}
-              />
-            </div>
-            
-            {/* Subtitle */}
-            <div className="mt-6 sm:mt-8 lg:mt-12" data-scroll-animate>
-              <div className="max-w-md">
-                <p className="text-xs lg:text-sm text-secondary-500/60 leading-relaxed font-light">
-                  CleanSip liefert Premium-Plastikstrohhalme für anspruchsvolle Event-Planer und Gastronomen in der Schweiz.
-                </p>
+          {/* Value Propositions */}
+          <div className="mt-8 space-y-4" data-scroll-animate>
+            <div className="flex items-center gap-3">
+              <div className="w-6 h-6 bg-primary-500 rounded-full flex items-center justify-center">
+                <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                </svg>
               </div>
+              <span className="text-secondary-700 font-medium">BPA-frei & lebensmittelecht nach EU-Standards</span>
             </div>
             
+            <div className="flex items-center gap-3">
+              <div className="w-6 h-6 bg-primary-500 rounded-full flex items-center justify-center">
+                <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+              </div>
+              <span className="text-secondary-700 font-medium">Express-Lieferung in 24-48h schweizweit</span>
+            </div>
+            
+            <div className="flex items-center gap-3">
+              <div className="w-6 h-6 bg-primary-500 rounded-full flex items-center justify-center">
+                <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+              </div>
+              <span className="text-secondary-700 font-medium">Gratis Versand ab CHF 50 - keine versteckten Kosten</span>
+            </div>
           </div>
           
-          {/* Info-Grid - Enhanced with animations */}
-          <div className="mt-10" data-scroll-animate>
-            <dl className="grid grid-cols-4 gap-x-8 text-xs uppercase tracking-widest">
-              {[
-                { label: 'Menge', value: '100 Stück' },
-                { label: 'Preis', value: featuredPrice },
-                { label: 'Material', value: '100% PP' },
-                { label: 'Lieferung', value: '48h' }
-              ].map((item, index) => (
-                <div 
-                  key={item.label}
-                  className="transform transition-all duration-300 hover:scale-105"
-                  style={{ animationDelay: `${index * 100}ms` }}
-                >
-                  <dt className="text-secondary-500/60 font-light">{item.label}</dt>
-                  <dd className="text-secondary-800 font-medium">{item.value}</dd>
-                </div>
-              ))}
-            </dl>
+          {/* Product Info Grid */}
+          <div className="mt-8 bg-white border-2 border-black p-6 shadow-brutal" data-scroll-animate>
+            <div className="grid grid-cols-2 gap-6">
+              <div>
+                <div className="text-2xl font-bold text-black">{featuredPrice}</div>
+                <div className="text-sm text-gray-700">pro 100 Stück</div>
+                <div className="text-xs text-gray-600 mt-1">inkl. 7.7% MwSt.</div>
+              </div>
+              <div>
+                <div className="text-2xl font-bold text-primary-600">48h</div>
+                <div className="text-sm text-gray-700">Lieferzeit</div>
+                <div className="text-xs text-gray-600 mt-1">Express möglich</div>
+              </div>
+            </div>
+            
+            <div className="mt-4 pt-4 border-t border-gray-300">
+              <div className="text-xs text-gray-700 uppercase tracking-wider mb-2 font-semibold">Verfügbare Farben:</div>
+              <div className="flex gap-2">
+                <div className="w-4 h-4 rounded-full bg-green-500 border border-black"></div>
+                <div className="w-4 h-4 rounded-full bg-yellow-400 border border-black"></div>
+                <div className="w-4 h-4 rounded-full bg-blue-600 border border-black"></div>
+                <div className="w-4 h-4 rounded-full bg-red-500 border border-black"></div>
+                <div className="w-4 h-4 rounded-full bg-black border border-gray-300"></div>
+                <span className="text-xs text-gray-700 ml-2 font-medium">+weitere</span>
+              </div>
+            </div>
           </div>
             
-          {/* Enhanced CTA-Button */}
-          <div className="mt-8 lg:mt-12" data-scroll-animate>
+          {/* CTA Buttons */}
+          <div className="mt-8 flex flex-col sm:flex-row gap-4" data-scroll-animate>
             <Link 
               href="/search/strohhalme"
-              className="group inline-block transform transition-all duration-300 hover:scale-105"
-              aria-label="Jetzt bestellen - Premium Plastikstrohhalme"
+              className="group inline-flex items-center justify-center bg-primary-500 text-white px-8 py-4 font-bold border-2 border-black shadow-brutal hover:shadow-brutal-hover transition-all duration-300 uppercase tracking-wider"
             >
-              <div className="relative bg-primary-500 text-white px-8 py-3 shadow-md hover:bg-primary-600 hover:shadow-xl transition-all duration-300 focus-visible:outline-2 focus-visible:outline-primary-500 focus-visible:outline-offset-2 overflow-hidden">
-                {/* Button background animation */}
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
-                
-                <span className="relative text-xs tracking-[0.15em] font-medium uppercase">
-                  JETZT BESTELLEN
-                </span>
-              </div>
+              <span>Jetzt bestellen</span>
+              <svg className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+              </svg>
             </Link>
+            
+            <Link 
+              href="/kontakt"
+              className="inline-flex items-center justify-center bg-white text-secondary-700 px-8 py-4 font-bold border-2 border-black hover:bg-gray-50 transition-all duration-300 uppercase tracking-wider"
+            >
+              Beratung anfragen
+            </Link>
+          </div>
+          
+          {/* Trust Indicators */}
+          <div className="mt-8 pt-6 border-t border-gray-300" data-scroll-animate>
+            <div className="flex items-center gap-6 text-sm text-gray-700">
+              <div className="flex items-center gap-2">
+                <svg className="w-5 h-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                </svg>
+                <span className="font-medium">SSL-verschlüsselt</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <svg className="w-5 h-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                </svg>
+                <span className="font-medium">14 Tage Rückgabe</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <svg className="w-5 h-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                </svg>
+                <span className="font-medium">CH Qualität</span>
+              </div>
+            </div>
           </div>
           
         </div>
         
-        {/* Right Column - WebGL 3D Straw */}
-        <div className="relative overflow-hidden">
+        {/* Right Column - Product Visual & Social Proof */}
+        <div className="relative overflow-hidden bg-white border-l-2 border-black">
           
-          {/* 3D Straw Model */}
-          <div 
-            ref={strawClickRef}
-            className="absolute inset-0 cursor-pointer"
-            onClick={handleStrawClick}
-          >
-            {supportsWebGL ? (
-              <Suspense fallback={<div className="animate-pulse bg-primary-100 w-full h-full" />}>
-                <Canvas
-                  camera={{ position: [0, 0, 5], fov: 50 }}
-                  dpr={[1, 2]}
-                  performance={{ min: 0.5 }}
-                >
-                  <ambientLight intensity={0.5} />
-                  <directionalLight position={[10, 10, 5]} intensity={1} />
-                  <StrawModel 
-                    mousePosition={{
-                      x: touchPosition.isActive ? touchPosition.normalizedX : mousePosition.normalizedX,
-                      y: touchPosition.isActive ? touchPosition.normalizedY : mousePosition.normalizedY
-                    }}
-                    isHovered={isHovered}
+          {/* Product Image */}
+          {featuredImage && (
+            <div className="absolute inset-0 flex items-center justify-center p-12">
+              <div className="relative max-w-md mx-auto">
+                <div className="aspect-square relative group">
+                  <img 
+                    src={featuredImage.url} 
+                    alt={featuredImage.altText || "Premium CleanSip Strohhalme"}
+                    className="w-full h-full object-cover rounded-lg shadow-2xl group-hover:scale-105 transition-transform duration-300"
                   />
-                </Canvas>
-              </Suspense>
-            ) : (
-              // SVG Fallback for non-WebGL devices - completely separate from Canvas
-              <div className="flex items-center justify-center w-full h-full">
-                <div 
-                  className="animate-float"
-                  style={{
-                    transform: `perspective(1000px) rotateY(${(mousePosition.normalizedX - 0.5) * 30}deg) rotateX(${(mousePosition.normalizedY - 0.5) * -30}deg)`
-                  }}
-                >
-                  <div 
-                    className="w-5 h-80 mx-auto rounded-full bg-gradient-to-r from-primary-500/80 via-primary-500/50 to-primary-500/80 shadow-lg"
-                    style={{
-                      background: 'linear-gradient(to right, #00BFA6CC, #00BFA680, #00BFA6CC)'
-                    }}
-                  />
+                  
+                  {/* Floating badges */}
+                  <div className="absolute -top-4 -right-4 bg-primary-500 text-white px-3 py-1 text-xs font-bold border-2 border-black transform rotate-12 shadow-lg">
+                    BESTSELLER
+                  </div>
+                  
+                  <div className="absolute -bottom-4 -left-4 bg-green-500 text-white px-3 py-1 text-xs font-bold border-2 border-black transform -rotate-12 shadow-lg">
+                    BPA-FREI
+                  </div>
+                </div>
+                
+                {/* Customer photos overlay */}
+                <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2">
+                  <div className="flex items-center gap-2 bg-white border-2 border-black px-4 py-2 shadow-brutal">
+                    <div className="flex -space-x-2">
+                      <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 border-2 border-white"></div>
+                      <div className="w-8 h-8 rounded-full bg-gradient-to-br from-green-400 to-green-600 border-2 border-white"></div>
+                      <div className="w-8 h-8 rounded-full bg-gradient-to-br from-purple-400 to-purple-600 border-2 border-white"></div>
+                      <div className="w-8 h-8 rounded-full bg-gray-200 border-2 border-white flex items-center justify-center text-xs font-bold text-gray-800">
+                        +50
+                      </div>
+                    </div>
+                    <div className="text-xs font-bold text-black">
+                      Diese Woche bestellt
+                    </div>
+                  </div>
                 </div>
               </div>
-            )}
-          </div>
+            </div>
+          )}
           
-          {/* Large Typography Element - Vertical "CLEAN" */}
-          <div className="absolute right-8 lg:right-12 top-1/2 -translate-y-1/2 pointer-events-none">
-            <div className="writing-mode-vertical text-secondary-200/30 text-6xl lg:text-8xl font-black tracking-wider animate-pulse-slow">
-              CLEAN
+          {/* Fallback 3D visualization */}
+          {!featuredImage && (
+            <div 
+              ref={strawClickRef}
+              className="absolute inset-0 cursor-pointer"
+              onClick={handleStrawClick}
+            >
+              {supportsWebGL ? (
+                <Suspense fallback={<div className="animate-pulse bg-primary-100 w-full h-full" />}>
+                  <Canvas
+                    camera={{ position: [0, 0, 5], fov: 50 }}
+                    dpr={[1, 2]}
+                    performance={{ min: 0.5 }}
+                  >
+                    <ambientLight intensity={0.5} />
+                    <directionalLight position={[10, 10, 5]} intensity={1} />
+                    <StrawModel 
+                      mousePosition={{
+                        x: touchPosition.isActive ? touchPosition.normalizedX : mousePosition.normalizedX,
+                        y: touchPosition.isActive ? touchPosition.normalizedY : mousePosition.normalizedY
+                      }}
+                      isHovered={isHovered}
+                    />
+                  </Canvas>
+                </Suspense>
+              ) : (
+                <div className="flex items-center justify-center w-full h-full">
+                  <div 
+                    className="animate-float"
+                    style={{
+                      transform: `perspective(1000px) rotateY(${(mousePosition.normalizedX - 0.5) * 30}deg) rotateX(${(mousePosition.normalizedY - 0.5) * -30}deg)`
+                    }}
+                  >
+                    <div 
+                      className="w-5 h-80 mx-auto rounded-full bg-gradient-to-r from-primary-500/80 via-primary-500/50 to-primary-500/80 shadow-lg"
+                      style={{
+                        background: 'linear-gradient(to right, #00BFA6CC, #00BFA680, #00BFA6CC)'
+                      }}
+                    />
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+          
+          {/* Bottom social proof bar */}
+          <div className="absolute bottom-0 left-0 right-0 bg-white border-t-2 border-black p-4">
+            <div className="flex items-center justify-between text-sm">
+              <div className="flex items-center gap-3">
+                <div className="flex items-center gap-1">
+                  {[...Array(5)].map((_, i) => (
+                    <svg key={i} className="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                    </svg>
+                  ))}
+                  <span className="ml-2 font-medium">4.8/5</span>
+                </div>
+                <span className="text-gray-500">•</span>
+                <span className="text-gray-600">500+ Bewertungen</span>
+              </div>
+              
+              <div className="flex items-center gap-2 text-green-600 font-medium">
+                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                <span>Auf Lager</span>
+              </div>
             </div>
           </div>
           

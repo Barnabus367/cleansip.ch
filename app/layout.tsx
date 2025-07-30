@@ -4,11 +4,15 @@ import ScrollToTop from 'components/scroll-to-top';
 import { WelcomeToast } from 'components/welcome-toast';
 import { GeistSans } from 'geist/font/sans';
 import { getCart } from 'lib/shopify';
+import { performStartupCheck } from 'lib/shopify/validate-config';
 import { baseUrl } from 'lib/utils';
 import { cookies } from 'next/headers';
 import { ReactNode } from 'react';
 import { Toaster } from 'sonner';
 import './globals.css';
+
+// Perform Shopify configuration check on app startup
+const shopifyValidation = performStartupCheck();
 
 const { SITE_NAME } = process.env;
 

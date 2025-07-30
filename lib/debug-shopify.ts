@@ -40,6 +40,7 @@ export async function debugShopifyData() {
       console.log(`Price: CHF ${sample.priceRange.minVariantPrice.amount}`);
       console.log(`Available: ${sample.availableForSale}`);
       console.log(`Tags: ${sample.tags?.join(', ') || 'None'}`);
+      console.log(`Featured Image: ${sample.featuredImage ? '✅ ' + sample.featuredImage.url : '❌ No image'}`);
     }
     
     // 5. Test processed products
@@ -51,6 +52,7 @@ export async function debugShopifyData() {
       console.log(`  - Subtitle: ${product.subtitle}`);
       console.log(`  - Price: ${product.price}`);
       console.log(`  - Accent: ${product.accentColor}`);
+      console.log(`  - Image: ${product.featuredImage ? '✅ Available' : '❌ Missing'}`);
     });
     
     // 6. Required fields check

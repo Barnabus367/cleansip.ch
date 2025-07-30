@@ -19,7 +19,6 @@ test.describe('Hero Section', () => {
     // Take screenshot of hero section
     const heroSection = page.locator('[data-testid="hero-section"]');
     await expect(heroSection).toHaveScreenshot('hero-desktop.png', {
-      fullPage: false,
       animations: 'disabled'
     });
   });
@@ -30,7 +29,6 @@ test.describe('Hero Section', () => {
     // Take screenshot of hero section
     const heroSection = page.locator('[data-testid="hero-section"]');
     await expect(heroSection).toHaveScreenshot('hero-mobile.png', {
-      fullPage: false,
       animations: 'disabled'
     });
   });
@@ -41,7 +39,6 @@ test.describe('Hero Section', () => {
     // Take screenshot of hero section
     const heroSection = page.locator('[data-testid="hero-section"]');
     await expect(heroSection).toHaveScreenshot('hero-tablet.png', {
-      fullPage: false,
       animations: 'disabled'
     });
   });
