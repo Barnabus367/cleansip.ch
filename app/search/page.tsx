@@ -1,4 +1,3 @@
-import Grid from 'components/grid';
 import ProductGridItems from 'components/layout/product-grid-items';
 import { defaultSort, sorting } from 'lib/constants';
 import { mockProducts } from 'lib/mock-data';
@@ -49,9 +48,9 @@ export default async function SearchPage(props: {
         </p>
       )}
       {products.length > 0 ? (
-        <Grid className="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mb-8">
           <ProductGridItems products={products} />
-        </Grid>
+        </div>
       ) : (
         <div className="flex flex-col items-center justify-center py-16">
           <p className="text-secondary/60">Keine Produkte gefunden.</p>

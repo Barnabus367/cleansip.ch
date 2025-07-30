@@ -2,7 +2,6 @@ import { mockProducts } from 'lib/mock-data';
 import { getCollectionProducts } from 'lib/shopify';
 import type { Product } from 'lib/shopify/types';
 import Link from 'next/link';
-import { GridTileImage } from './grid/tile';
 
 export async function Carousel() {
   // Try to get products from Shopify, fallback to mock data

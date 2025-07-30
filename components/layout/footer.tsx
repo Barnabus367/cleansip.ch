@@ -1,6 +1,6 @@
-import Link from 'next/link';
 import { FEATURE_FLAGS } from 'lib/constants';
 import { getMenu } from 'lib/shopify';
+import Link from 'next/link';
 
 export default async function Footer() {
   const currentYear = new Date().getFullYear();

@@ -5,7 +5,7 @@ import clsx from 'clsx';
 import { addItem } from 'components/cart/actions';
 import { useProduct } from 'components/product/product-context';
 import { Product, ProductVariant } from 'lib/shopify/types';
-import { useActionState, useState } from 'react';
+import { useActionState } from 'react';
 import { useCart } from './cart-context';
 
 function SubmitButton({

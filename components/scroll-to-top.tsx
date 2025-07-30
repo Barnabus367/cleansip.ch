@@ -1,7 +1,7 @@
 'use client';
 
-import { useState, useEffect } from 'react';
 import clsx from 'clsx';
+import { useEffect, useState } from 'react';
 
 export default function ScrollToTop() {
   const [isVisible, setIsVisible] = useState(false);

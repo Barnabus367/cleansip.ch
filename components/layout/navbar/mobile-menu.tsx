@@ -1,18 +1,25 @@
 'use client';
 
-import { Dialog, Transition } from '@headlessui/react';
+import { Dialog, DialogBackdrop, DialogPanel } from '@headlessui/react';
+import { Bars3Icon, HeartIcon, MagnifyingGlassIcon, ShoppingBagIcon, UserIcon, XMarkIcon } from '@heroicons/react/24/outline';
+import { Menu } from 'lib/shopify/types';
+import Form from 'next/form';
 import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
-import { Fragment, Suspense, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
-import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
-import { Menu } from 'lib/shopify/types';
-import Search, { SearchSkeleton } from './search';
+const QUICK_LINKS = [
+  { name: 'Über uns', href: '/about', icon: UserIcon },
+  { name: 'Kontakt', href: '/contact', icon: HeartIcon },
+  { name: 'Hilfe', href: '/help', icon: HeartIcon },
+];
 
 export default function MobileMenu({ menu }: { menu: Menu[] }) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const [isOpen, setIsOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState(searchParams?.get('q') || '');
+
   const openMobileMenu = () => setIsOpen(true);
   const closeMobileMenu = () => setIsOpen(false);
 
@@ -24,7 +31,7 @@ export default function MobileMenu({ menu }: { menu: Menu[] }) {
     };
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
-  }, [isOpen]);
+  }, []);
 
   useEffect(() => {
     setIsOpen(false);
@@ -32,69 +39,162 @@ export default function MobileMenu({ menu }: { menu: Menu[] }) {
 
   return (
     <>
+      {/* Menu Button */}
       <button
         onClick={openMobileMenu}
         aria-label="Open mobile menu"
-        className="flex h-11 w-11 items-center justify-center rounded-md border border-neutral-200 text-black transition-colors md:hidden dark:border-neutral-700 dark:text-white"
+        className="flex h-11 w-11 items-center justify-center rounded-full border border-white/20 text-white transition-colors hover:border-white/40 hover:bg-white/10 md:hidden"
       >
-        <Bars3Icon className="h-4" />
+        <Bars3Icon className="h-5 w-5" />
       </button>
-      <Transition show={isOpen}>
-        <Dialog onClose={closeMobileMenu} className="relative z-50">
-          <Transition.Child
-            as={Fragment}
-            enter="transition-all ease-in-out duration-300"
-            enterFrom="opacity-0 backdrop-blur-none"
-            enterTo="opacity-100 backdrop-blur-[.5px]"
-            leave="transition-all ease-in-out duration-200"
-            leaveFrom="opacity-100 backdrop-blur-[.5px]"
-            leaveTo="opacity-0 backdrop-blur-none"
-          >
-            <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
-          </Transition.Child>
-          <Transition.Child
-            as={Fragment}
-            enter="transition-all ease-in-out duration-300"
-            enterFrom="translate-x-[-100%]"
-            enterTo="translate-x-0"
-            leave="transition-all ease-in-out duration-200"
-            leaveFrom="translate-x-0"
-            leaveTo="translate-x-[-100%]"
-          >
-            <Dialog.Panel className="fixed bottom-0 left-0 right-0 top-0 flex h-full w-full flex-col bg-white pb-6 dark:bg-black">
-              <div className="p-4">
+
+      {/* Full Screen Overlay */}
+      <Dialog open={isOpen} onClose={closeMobileMenu} className="relative z-50">
+        <DialogBackdrop
+          transition
+          className="fixed inset-0 bg-black/50 backdrop-blur-sm transition-opacity duration-300 ease-out data-[closed]:opacity-0"
+        />
+
+        <div className="fixed inset-0 overflow-y-auto">
+          <div className="flex min-h-full items-start justify-end">
+            <DialogPanel
+              transition
+              className="relative w-full max-w-sm transform bg-white transition-all duration-300 ease-out data-[closed]:translate-x-full"
+            >
+              {/* Header */}
+              <div className="flex items-center justify-between px-6 py-6 border-b border-gray-100">
+                <div className="flex items-center gap-2">
+                  <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+                    <span className="text-white font-bold text-sm">CS</span>
+                  </div>
+                  <span className="font-bold text-xl">CleanSip</span>
+                </div>
                 <button
-                  className="mb-4 flex h-11 w-11 items-center justify-center rounded-md border border-neutral-200 text-black transition-colors dark:border-neutral-700 dark:text-white"
                   onClick={closeMobileMenu}
                   aria-label="Close mobile menu"
+                  className="flex h-10 w-10 items-center justify-center rounded-full hover:bg-gray-100 transition-colors"
                 >
-                  <XMarkIcon className="h-6" />
+                  <XMarkIcon className="h-6 w-6" />
                 </button>
+              </div>
 
-                <div className="mb-4 w-full">
-                  <Suspense fallback={<SearchSkeleton />}>
-                    <Search />
-                  </Suspense>
+              <div className="flex-1 px-6 py-6">
+                {/* Search Bar */}
+                <div className="mb-8">
+                  <Form action="/search" className="relative">
+                    <input
+                      type="text"
+                      name="q"
+                      placeholder="Produkte suchen..."
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      className="w-full h-12 pl-12 pr-4 rounded-xl border-2 border-gray-200 focus:border-primary focus:outline-none transition-colors"
+                    />
+                    <MagnifyingGlassIcon className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+                  </Form>
                 </div>
-                {menu.length ? (
-                  <ul className="flex w-full flex-col">
-                    {menu.map((item: Menu) => (
-                      <li
-                        className="py-2 text-xl text-black transition-colors hover:text-neutral-500 dark:text-white"
-                        key={item.title}
-                      >
-                        <Link href={item.path} prefetch={true} onClick={closeMobileMenu}>
+
+                {/* Main Navigation */}
+                {menu?.length > 0 && (
+                  <nav className="mb-8">
+                    <h2 className="text-sm font-semibold text-gray-600 uppercase tracking-wider mb-4">
+                      Navigation
+                    </h2>
+                    <div className="space-y-3">
+                      {menu.map((item, index) => (
+                        <Link
+                          key={item.title}
+                          href={item.path}
+                          onClick={closeMobileMenu}
+                          style={{ animationDelay: `${index * 0.1}s` }}
+                          className={`block py-3 px-4 rounded-xl text-lg font-medium transition-all duration-300 animate-fade-in-up ${
+                            pathname === item.path
+                              ? 'bg-primary text-white'
+                              : 'text-gray-900 hover:bg-gray-50 hover:text-primary'
+                          }`}
+                        >
                           {item.title}
                         </Link>
-                      </li>
-                    ))}
-                  </ul>
-                ) : null}
+                      ))}
+                    </div>
+                  </nav>
+                )}
+
+                {/* Quick Actions */}
+                <div className="mb-8">
+                  <h2 className="text-sm font-semibold text-gray-600 uppercase tracking-wider mb-4">
+                    Schnellzugriff
+                  </h2>
+                  <div className="grid grid-cols-2 gap-3">
+                    <Link
+                      href="/cart"
+                      onClick={closeMobileMenu}
+                      className="flex flex-col items-center gap-2 p-4 rounded-xl border border-gray-200 hover:border-primary hover:bg-primary/5 transition-all"
+                    >
+                      <ShoppingBagIcon className="h-6 w-6 text-primary" />
+                      <span className="text-sm font-medium">Warenkorb</span>
+                    </Link>
+                    <Link
+                      href="/account"
+                      onClick={closeMobileMenu}
+                      className="flex flex-col items-center gap-2 p-4 rounded-xl border border-gray-200 hover:border-primary hover:bg-primary/5 transition-all"
+                    >
+                      <UserIcon className="h-6 w-6 text-primary" />
+                      <span className="text-sm font-medium">Konto</span>
+                    </Link>
+                  </div>
+                </div>
+
+                {/* Additional Links */}
+                <div className="space-y-2">
+                  {QUICK_LINKS.map((link, index) => (
+                    <Link
+                      key={link.name}
+                      href={link.href}
+                      onClick={closeMobileMenu}
+                      style={{ animationDelay: `${(menu?.length || 0) + index * 0.1}s` }}
+                      className="flex items-center gap-3 py-3 px-4 rounded-xl text-gray-700 hover:bg-gray-50 hover:text-primary transition-all animate-fade-in-up"
+                    >
+                      <link.icon className="h-5 w-5" />
+                      <span className="font-medium">{link.name}</span>
+                    </Link>
+                  ))}
+                </div>
               </div>
-            </Dialog.Panel>
-          </Transition.Child>
-        </Dialog>
-      </Transition>
+
+              {/* Footer */}
+              <div className="px-6 py-6 border-t border-gray-100 bg-gray-50">
+                <div className="text-center text-sm text-gray-500">
+                  <p className="mb-2">Folge uns</p>
+                  <div className="flex justify-center gap-4">
+                    <a href="#" className="text-gray-400 hover:text-primary transition-colors">Instagram</a>
+                    <a href="#" className="text-gray-400 hover:text-primary transition-colors">Facebook</a>
+                    <a href="#" className="text-gray-400 hover:text-primary transition-colors">Twitter</a>
+                  </div>
+                </div>
+              </div>
+            </DialogPanel>
+          </div>
+        </div>
+      </Dialog>
+
+      <style jsx>{`
+        @keyframes fade-in-up {
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        
+        .animate-fade-in-up {
+          animation: fade-in-up 0.5s ease-out forwards;
+          opacity: 0;
+        }
+      `}</style>
     </>
   );
 }

@@ -1,10 +1,11 @@
 import { CartProvider } from 'components/cart/cart-context';
-import { Navbar } from 'components/layout/navbar';
-import { WelcomeToast } from 'components/welcome-toast';
+import Navbar from 'components/layout/navbar';
 import ScrollToTop from 'components/scroll-to-top';
+import { WelcomeToast } from 'components/welcome-toast';
 import { GeistSans } from 'geist/font/sans';
 import { getCart } from 'lib/shopify';
 import { baseUrl } from 'lib/utils';
+import { cookies } from 'next/headers';
 import { ReactNode } from 'react';
 import { Toaster } from 'sonner';
 import './globals.css';
@@ -18,6 +19,9 @@ export const metadata = {
     template: `%s | CleanSip`
   },
   description: 'CleanSip liefert dir bewährte Kunststoff-Trinkhalme und mehr – ohne matschige Alternativen. Versand ab CHF 2.50, gratis ab CHF 50.',
+  icons: {
+    icon: '/favicon.ico',
+  },
   openGraph: {
     type: 'website',
     locale: 'de_CH',
@@ -46,7 +50,8 @@ export default async function RootLayout({
   children: ReactNode;
 }) {
   // Don't await the fetch, pass the Promise to the context provider
-  const cart = getCart();
+  const cartId = (await cookies()).get('cartId')?.value;
+  const cart = cartId ? getCart(cartId) : Promise.resolve(undefined);
 
   return (
     <html lang="de" className={`${GeistSans.variable} scroll-smooth`}>

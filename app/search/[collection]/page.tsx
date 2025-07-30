@@ -3,7 +3,6 @@ import { Product } from 'lib/shopify/types';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
-import Grid from 'components/grid';
 import ProductGridItems from 'components/layout/product-grid-items';
 import { defaultSort, sorting } from 'lib/constants';
 
@@ -87,9 +86,9 @@ export default async function CategoryPage(props: {
           </p>
         </div>
       ) : (
-        <Grid className="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mb-8">
           <ProductGridItems products={products} />
-        </Grid>
+        </div>
       )}
     </section>
   );
