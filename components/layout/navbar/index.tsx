@@ -1,5 +1,4 @@
 import CartModal from 'components/cart/modal';
-import LogoSquare from 'components/logo-square';
 import { getMenu } from 'lib/shopify';
 import { Menu } from 'lib/shopify/types';
 import Link from 'next/link';
@@ -36,17 +35,22 @@ export async function Navbar() {
         </Suspense>
       </div>
       <div className="flex w-full items-center">
-        <div className="flex w-full md:w-1/3">
-          <Link
-            href="/"
-            prefetch={true}
-            className="mr-2 flex w-full items-center justify-center md:w-auto lg:mr-6"
-          >
-            <LogoSquare />
-            <div className="ml-2 flex-none text-sm font-medium text-secondary md:hidden lg:block">
-              CleanSip
-            </div>
-          </Link>
+            <div className="relative flex w-full items-center justify-between p-4 lg:px-6">
+      <div className="flex w-1/3">
+        <MobileMenu menu={menu} />
+      </div>
+      <div className="flex w-1/3 justify-center">
+        <Link href="/" className="mr-2 flex w-full items-center justify-center md:w-auto lg:mr-6">
+          <img
+            src="/brand/logos/logo-horizontal-primary.svg"
+            alt="CleanSip"
+            className="h-8 w-auto"
+          />
+          <div className="ml-2 flex-none text-sm font-bold uppercase tracking-widest md:hidden lg:block">
+            CleanSip
+          </div>
+        </Link>
+      </div>
           {navigationItems.length ? (
             <ul className="hidden gap-6 text-sm md:flex md:items-center">
               {navigationItems.map((item: Menu | typeof cleanSipNavigation[0]) => (

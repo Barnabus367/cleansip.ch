@@ -1,6 +1,5 @@
 import Link from 'next/link';
 
-import LogoSquare from 'components/logo-square';
 import { getMenu } from 'lib/shopify';
 
 export default async function Footer() {
@@ -21,7 +20,11 @@ export default async function Footer() {
       <div className="mx-auto flex w-full max-w-7xl flex-col gap-6 border-t border-secondary/10 px-6 py-12 text-sm md:flex-row md:gap-12 md:px-4 min-[1320px]:px-0">
         <div className="space-y-4">
           <Link className="flex items-center gap-2 text-secondary" href="/">
-            <LogoSquare size="sm" />
+            <img
+              src="/brand/logos/logo-icon-primary.svg"
+              alt="CleanSip Logo"
+              className="h-8 w-8"
+            />
             <span className="font-semibold">CleanSip</span>
           </Link>
           <p className="max-w-xs text-xs leading-relaxed">

@@ -26,7 +26,7 @@ export const metadata = {
     description: 'CleanSip liefert dir bewährte Kunststoff-Trinkhalme und mehr – ohne matschige Alternativen. Versand ab CHF 2.50, gratis ab CHF 50.',
     images: [
       {
-        url: '/og-cleansip.png',
+        url: '/og-default.svg',
         width: 1200,
         height: 630,
         alt: 'CleanSip - Nie mehr matschige Alternativen'

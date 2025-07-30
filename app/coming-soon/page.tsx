@@ -11,7 +11,7 @@ const futureProducts = [
     name: 'Classic Party Cups 50er Pack',
     price: '12.90 CHF',
     weight: '500 g',
-    icon: '/icons/cups.svg',
+    icon: '/brand/icons/icon-cup.svg',
     description: 'Stabile Plastikbecher für deine Party – ohne Durchweichen oder Bruch.'
   },
   {
@@ -19,7 +19,7 @@ const futureProducts = [
     name: 'Pro Stirrer 100er Pack',
     price: '5.90 CHF',
     weight: '150 g',
-    icon: '/icons/stirrers.svg',
+    icon: '/brand/icons/icon-straw.svg',
     description: 'Holzfreie Rührstäbchen für jeden Anlass – hygienisch und stabil.'
   },
   {
@@ -27,7 +27,7 @@ const futureProducts = [
     name: 'Flex Fork & Knife 40er Kit',
     price: '9.80 CHF',
     weight: '300 g', 
-    icon: '/icons/besteck.svg',
+    icon: '/brand/icons/icon-delivery.svg',
     description: 'Kunststoff-Besteck-Kit für unterwegs – praktisch und robust.'
   }
 ];

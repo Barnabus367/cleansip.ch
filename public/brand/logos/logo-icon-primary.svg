@@ -1,0 +1,23 @@
+<svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <pattern id="strawPatternIcon" x="0" y="0" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <line x1="0" y1="2" x2="4" y2="2" stroke="#00BFA6" stroke-width="0.5" opacity="0.2"/>
+    </pattern>
+  </defs>
+  
+  <!-- Centered S-shaped straw -->
+  <g transform="translate(7, 8)">
+    <path d="M8 4 C8 4 8 14 15 14 L18 14 C25 14 25 20 25 20 L25 24 C25 24 25 30 32 30 L38 30 C38 30 38 38 38 42" 
+          stroke="#00BFA6" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <!-- Pattern overlay -->
+    <path d="M8 4 C8 4 8 14 15 14 L18 14 C25 14 25 20 25 20 L25 24 C25 24 25 30 32 30 L38 30 C38 30 38 38 38 42" 
+          stroke="url(#strawPatternIcon)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <!-- Top opening -->
+    <circle cx="8" cy="4" r="3" fill="#003B46"/>
+    <!-- Bottom opening -->
+    <ellipse cx="38" cy="42" rx="3.5" ry="2" fill="#003B46"/>
+    <!-- Highlight dots -->
+    <circle cx="21.5" cy="17" r="1.2" fill="#FFD54F" opacity="0.8"/>
+    <circle cx="28.5" cy="27" r="1.2" fill="#FFD54F" opacity="0.6"/>
+  </g>
+</svg>

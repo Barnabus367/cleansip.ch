@@ -4,6 +4,65 @@
 @plugin "@tailwindcss/typography";
 
 @layer base {
+  :root {
+    /* Primary Colors */
+    --color-primary-50: #E6FCF9;
+    --color-primary-100: #CCFAF2;
+    --color-primary-200: #99F5E6;
+    --color-primary-300: #66F0D9;
+    --color-primary-400: #33EBCD;
+    --color-primary-500: #00BFA6;
+    --color-primary-600: #00A690;
+    --color-primary-700: #008C7A;
+    --color-primary-800: #007363;
+    --color-primary-900: #00594D;
+    
+    /* Secondary Colors */
+    --color-secondary-50: #E6EEF0;
+    --color-secondary-100: #CCDDE1;
+    --color-secondary-200: #99BBC3;
+    --color-secondary-300: #6699A5;
+    --color-secondary-400: #337787;
+    --color-secondary-500: #003B46;
+    --color-secondary-600: #00323B;
+    --color-secondary-700: #002930;
+    --color-secondary-800: #002025;
+    --color-secondary-900: #00171A;
+    
+    /* Accent Colors */
+    --color-accent-50: #FFFBEB;
+    --color-accent-100: #FFF6D6;
+    --color-accent-200: #FFEDAD;
+    --color-accent-300: #FFE485;
+    --color-accent-400: #FFDC5C;
+    --color-accent-500: #FFD54F;
+    --color-accent-600: #E6BF47;
+    --color-accent-700: #CCAA3F;
+    --color-accent-800: #B39437;
+    --color-accent-900: #997F2F;
+    
+    /* Neutral Colors */
+    --color-neutral-50: #FEFEFE;
+    --color-neutral-100: #FDFDFD;
+    --color-neutral-200: #FBFBFC;
+    --color-neutral-300: #F9FAFB;
+    --color-neutral-400: #F7F8F9;
+    --color-neutral-500: #F5F6F7;
+    --color-neutral-600: #DDE0E3;
+    --color-neutral-700: #C4C9CE;
+    --color-neutral-800: #ACB3BA;
+    --color-neutral-900: #939CA5;
+    
+    /* Typography */
+    --font-display: 'Inter', system-ui, -apple-system, sans-serif;
+    --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+    
+    /* Shadows */
+    --shadow-soft: 0 2px 8px rgba(0, 59, 70, 0.08);
+    --shadow-medium: 0 4px 16px rgba(0, 59, 70, 0.12);
+    --shadow-hard: 0 8px 32px rgba(0, 59, 70, 0.16);
+  }
+
   *,
   ::after,
   ::before,
@@ -13,7 +72,7 @@
   }
   
   body {
-    font-family: 'Inter', system-ui, sans-serif;
+    font-family: var(--font-body);
   }
 }
 
