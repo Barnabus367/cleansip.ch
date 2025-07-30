@@ -112,4 +112,5 @@ const SectionTitle = React.forwardRef<HTMLDivElement, SectionTitleProps>(
 
 SectionTitle.displayName = 'SectionTitle';
 
-export { SectionTitle, sectionTitleVariants, sectionSubtitleVariants };
+export { sectionSubtitleVariants, SectionTitle, sectionTitleVariants };
+
